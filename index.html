@@ -88,6 +88,9 @@ body {
     font-size:
         28px;
 
+    font-weight:
+        700;
+
 }
 
 .header p {
@@ -102,7 +105,7 @@ body {
 
 
 /* =====================================================
-   MAIN CONTAINER
+   CONTAINER
    ===================================================== */
 
 .container {
@@ -111,7 +114,7 @@ body {
         100%;
 
     max-width:
-        700px;
+        720px;
 
     margin:
         auto;
@@ -169,10 +172,10 @@ body {
 
 
 /* =====================================================
-   SRN INPUT
+   PASSWORD INPUT
    ===================================================== */
 
-#srn {
+#password {
 
     width:
         100%;
@@ -192,19 +195,13 @@ body {
     font-size:
         18px;
 
-    text-transform:
-        uppercase;
-
-    letter-spacing:
-        0.5px;
-
     outline:
         none;
 
 }
 
 
-#srn:focus {
+#password:focus {
 
     border:
         2px solid #0284c7;
@@ -260,7 +257,7 @@ button:disabled {
 
 
 /* =====================================================
-   SUBMIT BUTTON
+   LOGIN BUTTON
    ===================================================== */
 
 .submit-button {
@@ -367,6 +364,21 @@ button:disabled {
     width:
         100%;
 
+    max-height:
+        600px;
+
+    overflow-y:
+        auto;
+
+    border:
+        1px solid #e2e8f0;
+
+    border-radius:
+        12px;
+
+    padding:
+        0 10px;
+
 }
 
 
@@ -393,6 +405,14 @@ button:disabled {
 
     border-bottom:
         1px solid #e5e7eb;
+
+}
+
+
+.file-item:last-child {
+
+    border-bottom:
+        none;
 
 }
 
@@ -493,6 +513,9 @@ button:disabled {
 
     word-break:
         break-word;
+
+    color:
+        #1e293b;
 
 }
 
@@ -710,10 +733,18 @@ button:disabled {
     }
 
 
-    #srn {
+    #password {
 
         font-size:
             17px;
+
+    }
+
+
+    .file-list {
+
+        max-height:
+            500px;
 
     }
 
@@ -773,38 +804,38 @@ button:disabled {
 
 
 <!-- =====================================================
-     SRN CARD
+     PASSWORD CARD
      ===================================================== -->
 
-<div class="card">
+<div
+    id="loginCard"
+    class="card"
+>
 
 
     <label
         class="label"
-        for="srn">
+        for="password">
 
-        Enter Your Complete SRN
+        🔐 Enter Password
 
     </label>
 
 
     <input
-        id="srn"
-        type="text"
-        placeholder="Example: PES1UG23CS001"
-        maxlength="13"
+        id="password"
+        type="password"
+        placeholder="Enter Password"
         autocomplete="off"
-        autocapitalize="characters"
-        spellcheck="false"
     >
 
 
     <button
         id="submitButton"
         class="submit-button"
-        onclick="loadFiles()">
+        onclick="verifyPassword()">
 
-        🔍 SUBMIT
+        🔐 SUBMIT
 
     </button>
 
@@ -831,11 +862,10 @@ button:disabled {
 >
 
 
-    <!-- WELCOME -->
-
     <div
-        id="welcome"
         class="welcome">
+
+        ✅ Access Granted
 
     </div>
 
@@ -874,7 +904,7 @@ button:disabled {
     </button>
 
 
-    <!-- SELECTED COUNT -->
+    <!-- COUNT -->
 
     <div
         id="selectedCount"
@@ -954,7 +984,6 @@ button:disabled {
    GITHUB CONFIGURATION
    ========================================================= */
 
-
 const OWNER =
     "selvakumar83";
 
@@ -968,17 +997,11 @@ const BRANCH =
 
 
 /* =========================================================
-   COMPLETE SRN FORMAT
-   =========================================================
-
-   Example:
-
-   PES1UG23CS001
-
+   COMMON PASSWORD
    ========================================================= */
 
-const SRN_PATTERN =
-    /^PES1UG\d{2}[A-Z]{2}\d{3}$/;
+const COMMON_PASSWORD =
+    "PES EC";
 
 
 /* =========================================================
@@ -987,46 +1010,38 @@ const SRN_PATTERN =
 
 let availableFiles = [];
 
-let studentSRN = "";
-
 
 /* =========================================================
-   LOAD FILES
+   VERIFY PASSWORD
    ========================================================= */
 
-async function loadFiles() {
+async function verifyPassword() {
 
 
-    /* -----------------------------------------------------
-       GET SRN
-       ----------------------------------------------------- */
-
-    const input =
+    const passwordInput =
         document.getElementById(
-            "srn"
+            "password"
         );
 
 
-    studentSRN =
-        input.value
-        .trim()
-        .toUpperCase();
+    const password =
+        passwordInput.value;
 
 
     /* -----------------------------------------------------
-       EMPTY
+       Check password
        ----------------------------------------------------- */
 
     if (
-        studentSRN === ""
+        password !== COMMON_PASSWORD
     ) {
 
         showStatus(
-            "Please enter your complete SRN.",
+            "❌ Incorrect password. Please try again.",
             "error"
         );
 
-        input.focus();
+        passwordInput.focus();
 
         return;
 
@@ -1034,30 +1049,7 @@ async function loadFiles() {
 
 
     /* -----------------------------------------------------
-       VALIDATE COMPLETE SRN
-       ----------------------------------------------------- */
-
-    if (
-        !SRN_PATTERN.test(
-            studentSRN
-        )
-    ) {
-
-        showStatus(
-            "Please enter your complete SRN. " +
-            "Example: PES1UG23CS001",
-            "error"
-        );
-
-        input.focus();
-
-        return;
-
-    }
-
-
-    /* -----------------------------------------------------
-       BUTTON
+       Password correct
        ----------------------------------------------------- */
 
     const submitButton =
@@ -1075,28 +1067,51 @@ async function loadFiles() {
 
 
     showStatus(
-        "Reading files from GitHub...",
+        "Password verified. Loading files...",
         "info"
     );
+
+
+    /* -----------------------------------------------------
+       Load repository files
+       ----------------------------------------------------- */
+
+    await loadFiles();
+
+
+}
+
+
+/* =========================================================
+   LOAD ALL GITHUB FILES
+   ========================================================= */
+
+async function loadFiles() {
 
 
     try {
 
 
         /* =================================================
-           GITHUB CONTENTS API
+           GitHub Git Trees API
 
-           Reads repository files automatically.
+           recursive=1 means:
+
+           Root files
+           +
+           Files inside folders
+           +
+           Files inside subfolders
            ================================================= */
-
 
         const apiURL =
             "https://api.github.com/repos/" +
             OWNER +
             "/" +
             REPOSITORY +
-            "/contents/?ref=" +
-            BRANCH;
+            "/git/trees/" +
+            BRANCH +
+            "?recursive=1";
 
 
         const response =
@@ -1114,105 +1129,251 @@ async function loadFiles() {
             );
 
 
+        /* =================================================
+           ERROR HANDLING
+           ================================================= */
+
         if (
             !response.ok
         ) {
 
+
+            if (
+                response.status ===
+                403
+            ) {
+
+                throw new Error(
+                    "GitHub request limit reached. " +
+                    "Please try again later."
+                );
+
+            }
+
+
+            if (
+                response.status ===
+                404
+            ) {
+
+                throw new Error(
+                    "GitHub repository was not found."
+                );
+
+            }
+
+
             throw new Error(
-                "GitHub repository unavailable."
+                "GitHub returned error " +
+                response.status
             );
 
         }
 
 
-        const rootItems =
+        /* =================================================
+           READ JSON
+           ================================================= */
+
+        const data =
             await response.json();
 
 
         /* =================================================
-           CLEAR PREVIOUS FILES
+           CHECK TREE
+           ================================================= */
+
+        if (
+            !Array.isArray(
+                data.tree
+            )
+        ) {
+
+            throw new Error(
+                "Unable to read repository files."
+            );
+
+        }
+
+
+        /* =================================================
+           CHECK TRUNCATED
+           ================================================= */
+
+        if (
+            data.truncated === true
+        ) {
+
+            throw new Error(
+                "The repository contains too many files."
+            );
+
+        }
+
+
+        /* =================================================
+           CLEAR OLD LIST
            ================================================= */
 
         availableFiles = [];
 
 
         /* =================================================
-           PROCESS ROOT
+           READ EVERY FILE
            ================================================= */
 
-        for (
-            const item of rootItems
-        ) {
+        data.tree.forEach(
+            function(item) {
 
 
-            /*
-            If it is a file
-            */
+                /*
+                "blob" means file.
 
-            if (
-                item.type ===
-                "file"
-            ) {
+                "tree" means folder.
+                */
 
-                addFile(
-                    item
-                );
-
-            }
-
-
-            /*
-            If it is a folder
-
-            Search inside it.
-            */
-
-            else if (
-                item.type ===
-                "dir"
-            ) {
-
-                await scanFolder(
-                    item.path
-                );
-
-            }
-
-        }
-
-
-        /* =================================================
-           REMOVE DUPLICATES
-           ================================================= */
-
-        availableFiles =
-            availableFiles.filter(
-                function(
-                    file,
-                    index,
-                    array
+                if (
+                    item.type !==
+                    "blob"
                 ) {
 
-                    return (
-                        index ===
-                        array.findIndex(
-                            function(other) {
-
-                                return (
-                                    other.path ===
-                                    file.path
-                                );
-
-                            }
-                        )
-                    );
+                    return;
 
                 }
-            );
+
+
+                if (
+                    !item.path
+                ) {
+
+                    return;
+
+                }
+
+
+                /* -----------------------------------------
+                   Actual repository path
+                   ----------------------------------------- */
+
+                const filePath =
+                    item.path;
+
+
+                /* -----------------------------------------
+                   Actual filename
+                   ----------------------------------------- */
+
+                const filename =
+                    filePath
+                    .split("/")
+                    .pop();
+
+
+                /* -----------------------------------------
+                   Ignore only index.html
+
+                   The webpage itself should not appear
+                   as a downloadable teaching file.
+                   ----------------------------------------- */
+
+                if (
+                    filename
+                    .toLowerCase()
+                    ===
+                    "index.html"
+                ) {
+
+                    return;
+
+                }
+
+
+                /* -----------------------------------------
+                   Extension
+                   ----------------------------------------- */
+
+                let extension =
+                    "";
+
+
+                const dot =
+                    filename.lastIndexOf(".");
+
+
+                if (
+                    dot !== -1
+                ) {
+
+                    extension =
+                        filename
+                        .substring(
+                            dot + 1
+                        )
+                        .toUpperCase();
+
+                }
+
+
+                /* -----------------------------------------
+                   Encode path
+                   ----------------------------------------- */
+
+                const encodedPath =
+                    filePath
+                    .split("/")
+                    .map(
+                        function(part) {
+
+                            return encodeURIComponent(
+                                part
+                            );
+
+                        }
+                    )
+                    .join("/");
+
+
+                /* -----------------------------------------
+                   Direct raw GitHub URL
+                   ----------------------------------------- */
+
+                const downloadURL =
+                    "https://raw.githubusercontent.com/" +
+                    OWNER +
+                    "/" +
+                    REPOSITORY +
+                    "/" +
+                    BRANCH +
+                    "/" +
+                    encodedPath;
+
+
+                /* -----------------------------------------
+                   Add file
+                   ----------------------------------------- */
+
+                availableFiles.push({
+
+                    name:
+                        filename,
+
+                    path:
+                        filePath,
+
+                    extension:
+                        extension,
+
+                    downloadURL:
+                        downloadURL
+
+                });
+
+            }
+        );
 
 
         /* =================================================
-           SORT
+           SORT FILES
            ================================================= */
 
         availableFiles.sort(
@@ -1235,7 +1396,7 @@ async function loadFiles() {
 
 
         /* =================================================
-           CHECK
+           CHECK FILES
            ================================================= */
 
         if (
@@ -1243,7 +1404,7 @@ async function loadFiles() {
         ) {
 
             throw new Error(
-                "No files found in repository."
+                "No files found in the repository."
             );
 
         }
@@ -1257,7 +1418,19 @@ async function loadFiles() {
 
 
         /* =================================================
-           SHOW CARD
+           HIDE LOGIN
+           ================================================= */
+
+        document
+            .getElementById(
+                "loginCard"
+            )
+            .style.display =
+            "none";
+
+
+        /* =================================================
+           SHOW FILE CARD
            ================================================= */
 
         document
@@ -1269,20 +1442,7 @@ async function loadFiles() {
 
 
         /* =================================================
-           WELCOME
-           ================================================= */
-
-        document
-            .getElementById(
-                "welcome"
-            )
-            .textContent =
-            "Welcome, " +
-            studentSRN;
-
-
-        /* =================================================
-           COUNT
+           FILE COUNT
            ================================================= */
 
         document
@@ -1293,15 +1453,6 @@ async function loadFiles() {
             availableFiles.length +
             " files available";
 
-
-        /* =================================================
-           SUCCESS
-           ================================================= */
-
-        showStatus(
-            "All files loaded successfully.",
-            "success"
-        );
 
     }
 
@@ -1315,15 +1466,16 @@ async function loadFiles() {
 
 
         showStatus(
-            "Unable to load files from GitHub. " +
-            "Please try again.",
+            "❌ " +
+            error.message,
             "error"
         );
 
-    }
 
-
-    finally {
+        const submitButton =
+            document.getElementById(
+                "submitButton"
+            );
 
 
         submitButton.disabled =
@@ -1331,211 +1483,9 @@ async function loadFiles() {
 
 
         submitButton.textContent =
-            "🔍 SUBMIT";
+            "🔐 SUBMIT";
 
     }
-
-}
-
-
-/* =========================================================
-   SCAN FOLDER
-   ========================================================= */
-
-async function scanFolder(
-    folderPath
-) {
-
-
-    const encodedFolder =
-        folderPath
-        .split("/")
-        .map(
-            function(part) {
-
-                return encodeURIComponent(
-                    part
-                );
-
-            }
-        )
-        .join("/");
-
-
-    const folderURL =
-        "https://api.github.com/repos/" +
-        OWNER +
-        "/" +
-        REPOSITORY +
-        "/contents/" +
-        encodedFolder +
-        "?ref=" +
-        BRANCH;
-
-
-    const response =
-        await fetch(
-            folderURL,
-            {
-                cache:
-                    "no-store",
-
-                headers: {
-                    "Accept":
-                        "application/vnd.github+json"
-                }
-            }
-        );
-
-
-    if (
-        !response.ok
-    ) {
-
-        return;
-
-    }
-
-
-    const items =
-        await response.json();
-
-
-    for (
-        const item of items
-    ) {
-
-
-        if (
-            item.type ===
-            "file"
-        ) {
-
-            addFile(
-                item
-            );
-
-        }
-
-
-        else if (
-            item.type ===
-            "dir"
-        ) {
-
-            await scanFolder(
-                item.path
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   ADD EVERY FILE
-   ========================================================= */
-
-function addFile(
-    item
-) {
-
-
-    /*
-    Actual GitHub filename
-    */
-
-    const filename =
-        item.name;
-
-
-    /*
-    Don't show the website itself
-    */
-
-    if (
-        filename
-        .toLowerCase()
-        ===
-        "index.html"
-    ) {
-
-        return;
-
-    }
-
-
-    /*
-    We want EVERY OTHER FILE.
-
-    No extension filtering.
-
-    PDF
-    DOC
-    DOCX
-    PPT
-    PPTX
-    C
-    CPP
-    JAVA
-    PY
-    TXT
-    ZIP
-    JPG
-    PNG
-    etc.
-
-    Everything is supported.
-    */
-
-
-    /*
-    File extension
-    */
-
-    let extension =
-        "";
-
-
-    const dot =
-        filename.lastIndexOf(".");
-
-
-    if (
-        dot !== -1
-    ) {
-
-        extension =
-            filename
-            .substring(
-                dot + 1
-            )
-            .toUpperCase();
-
-    }
-
-
-    /*
-    Add
-    */
-
-    availableFiles.push({
-
-        name:
-            filename,
-
-        path:
-            item.path,
-
-        extension:
-            extension,
-
-        downloadURL:
-            item.download_url
-
-    });
 
 }
 
@@ -1607,7 +1557,7 @@ function displayFiles() {
 
 
             /* ---------------------------------------------
-               ACTUAL FILENAME
+               ACTUAL FILE NAME
                --------------------------------------------- */
 
             const name =
@@ -1625,7 +1575,7 @@ function displayFiles() {
 
 
             /* ---------------------------------------------
-               TYPE
+               FILE TYPE
                --------------------------------------------- */
 
             const type =
@@ -1644,7 +1594,7 @@ function displayFiles() {
 
 
             /* ---------------------------------------------
-               ADD
+               ADD ELEMENTS
                --------------------------------------------- */
 
             row.appendChild(
@@ -1668,6 +1618,9 @@ function displayFiles() {
 
         }
     );
+
+
+    updateSelectedCount();
 
 }
 
@@ -1725,7 +1678,7 @@ function clearAllFiles() {
 
 
 /* =========================================================
-   SELECTED COUNT
+   UPDATE SELECTED COUNT
    ========================================================= */
 
 function updateSelectedCount() {
@@ -1758,6 +1711,14 @@ function updateSelectedCount() {
 
 /* =========================================================
    DOWNLOAD SELECTED FILES
+   =========================================================
+
+   IMPORTANT:
+
+   Files are downloaded individually.
+
+   NO ZIP.
+
    ========================================================= */
 
 async function downloadSelectedFiles() {
@@ -1770,6 +1731,10 @@ async function downloadSelectedFiles() {
             )
         );
 
+
+    /* -----------------------------------------------------
+       Check selection
+       ----------------------------------------------------- */
 
     if (
         selected.length === 0
@@ -1795,12 +1760,8 @@ async function downloadSelectedFiles() {
 
 
     /* =====================================================
-       DIRECT DOWNLOAD
-
-       NO ZIP
-       NO CONVERSION
+       DOWNLOAD EACH FILE
        ===================================================== */
-
 
     for (
         let i = 0;
@@ -1809,9 +1770,17 @@ async function downloadSelectedFiles() {
     ) {
 
 
+        /* ---------------------------------------------
+           Get selected checkbox
+           --------------------------------------------- */
+
         const checkbox =
             selected[i];
 
+
+        /* ---------------------------------------------
+           Get index
+           --------------------------------------------- */
 
         const index =
             Number(
@@ -1819,12 +1788,16 @@ async function downloadSelectedFiles() {
             );
 
 
+        /* ---------------------------------------------
+           Get file
+           --------------------------------------------- */
+
         const file =
             availableFiles[index];
 
 
         /* ---------------------------------------------
-           Progress
+           Show progress
            --------------------------------------------- */
 
         button.textContent =
@@ -1835,7 +1808,7 @@ async function downloadSelectedFiles() {
 
 
         /* ---------------------------------------------
-           Create download link
+           Direct download link
            --------------------------------------------- */
 
         const link =
@@ -1865,7 +1838,7 @@ async function downloadSelectedFiles() {
 
 
         /* ---------------------------------------------
-           Start download
+           Add link to page
            --------------------------------------------- */
 
         document
@@ -1875,8 +1848,16 @@ async function downloadSelectedFiles() {
             );
 
 
+        /* ---------------------------------------------
+           Start download
+           --------------------------------------------- */
+
         link.click();
 
+
+        /* ---------------------------------------------
+           Remove link
+           --------------------------------------------- */
 
         document
             .body
@@ -1885,11 +1866,11 @@ async function downloadSelectedFiles() {
             );
 
 
-        /*
-        Delay between files.
+        /* ---------------------------------------------
+           Wait before next download
 
-        Helps mobile browsers.
-        */
+           This helps mobile browsers.
+           --------------------------------------------- */
 
         await delay(
             1200
@@ -1899,7 +1880,7 @@ async function downloadSelectedFiles() {
 
 
     /* =====================================================
-       RESET
+       RESET BUTTON
        ===================================================== */
 
     button.textContent =
@@ -1911,7 +1892,7 @@ async function downloadSelectedFiles() {
 
 
     showStatus(
-        "Selected files downloaded.",
+        "Selected files sent for download.",
         "success"
     );
 
@@ -1977,39 +1958,20 @@ function showStatus(
 
 document
     .getElementById(
-        "srn"
+        "password"
     )
     .addEventListener(
         "keydown",
         function(event) {
 
             if (
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ) {
 
-                loadFiles();
+                verifyPassword();
 
             }
-
-        }
-    );
-
-
-/* =========================================================
-   AUTOMATIC UPPERCASE
-   ========================================================= */
-
-document
-    .getElementById(
-        "srn"
-    )
-    .addEventListener(
-        "input",
-        function() {
-
-            this.value =
-                this.value
-                .toUpperCase();
 
         }
     );
