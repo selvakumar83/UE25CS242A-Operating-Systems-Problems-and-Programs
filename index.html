@@ -26,14 +26,12 @@ Operating Systems - Problems & Programs
     box-sizing: border-box;
 }
 
-
 html,
 body {
     margin: 0;
     padding: 0;
     width: 100%;
 }
-
 
 body {
 
@@ -42,9 +40,11 @@ body {
         Helvetica,
         sans-serif;
 
-    background: #f1f5f9;
+    background:
+        #f1f5f9;
 
-    color: #222;
+    color:
+        #222;
 
 }
 
@@ -62,9 +62,11 @@ body {
             #0369a1
         );
 
-    color: white;
+    color:
+        white;
 
-    text-align: center;
+    text-align:
+        center;
 
     padding:
         25px 15px 28px;
@@ -78,22 +80,23 @@ body {
 
 }
 
-
 .header h1 {
 
-    margin: 0;
+    margin:
+        0;
 
-    font-size: 27px;
+    font-size:
+        28px;
 
 }
-
 
 .header p {
 
     margin:
         8px 0 0;
 
-    font-size: 16px;
+    font-size:
+        16px;
 
 }
 
@@ -104,13 +107,17 @@ body {
 
 .container {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 700px;
+    max-width:
+        700px;
 
-    margin: auto;
+    margin:
+        auto;
 
-    padding: 12px;
+    padding:
+        12px;
 
 }
 
@@ -121,13 +128,17 @@ body {
 
 .card {
 
-    background: white;
+    background:
+        white;
 
-    margin-top: 18px;
+    margin-top:
+        18px;
 
-    padding: 20px;
+    padding:
+        20px;
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
     box-shadow:
         0 3px 15px
@@ -137,27 +148,37 @@ body {
 
 
 /* =====================================================
-   SRN
+   LABEL
    ===================================================== */
 
 .label {
 
-    display: block;
+    display:
+        block;
 
-    margin-bottom: 9px;
+    margin-bottom:
+        9px;
 
-    font-size: 18px;
+    font-size:
+        18px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
 }
 
 
+/* =====================================================
+   SRN INPUT
+   ===================================================== */
+
 #srn {
 
-    width: 100%;
+    width:
+        100%;
 
-    height: 55px;
+    height:
+        56px;
 
     padding:
         10px 15px;
@@ -165,13 +186,20 @@ body {
     border:
         1px solid #cbd5e1;
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 
-    font-size: 18px;
+    font-size:
+        18px;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 
-    outline: none;
+    letter-spacing:
+        0.5px;
+
+    outline:
+        none;
 
 }
 
@@ -190,23 +218,32 @@ body {
 
 button {
 
-    width: 100%;
+    width:
+        100%;
 
-    min-height: 52px;
+    min-height:
+        52px;
 
-    margin-top: 12px;
+    margin-top:
+        12px;
 
-    padding: 12px;
+    padding:
+        12px;
 
-    border: none;
+    border:
+        none;
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 
-    font-size: 16px;
+    font-size:
+        16px;
 
-    font-weight: bold;
+    font-weight:
+        bold;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
 }
 
@@ -216,20 +253,30 @@ button:disabled {
     background:
         #94a3b8 !important;
 
-    cursor: not-allowed;
+    cursor:
+        not-allowed;
 
 }
 
+
+/* =====================================================
+   SUBMIT BUTTON
+   ===================================================== */
 
 .submit-button {
 
     background:
         #0369a1;
 
-    color: white;
+    color:
+        white;
 
 }
 
+
+/* =====================================================
+   SELECT BUTTONS
+   ===================================================== */
 
 .select-button {
 
@@ -242,12 +289,17 @@ button:disabled {
 }
 
 
+/* =====================================================
+   DOWNLOAD BUTTON
+   ===================================================== */
+
 .download-button {
 
     background:
         #15803d;
 
-    color: white;
+    color:
+        white;
 
 }
 
@@ -307,6 +359,18 @@ button:disabled {
 
 
 /* =====================================================
+   FILE LIST
+   ===================================================== */
+
+.file-list {
+
+    width:
+        100%;
+
+}
+
+
+/* =====================================================
    FILE ITEM
    ===================================================== */
 
@@ -318,8 +382,11 @@ button:disabled {
     align-items:
         center;
 
+    width:
+        100%;
+
     min-height:
-        58px;
+        60px;
 
     padding:
         10px 4px;
@@ -329,6 +396,10 @@ button:disabled {
 
 }
 
+
+/* =====================================================
+   CHECKBOX
+   ===================================================== */
 
 .file-checkbox {
 
@@ -362,6 +433,9 @@ button:disabled {
     cursor:
         pointer;
 
+    position:
+        relative;
+
 }
 
 
@@ -372,9 +446,6 @@ button:disabled {
 
     border-color:
         #0284c7;
-
-    position:
-        relative;
 
 }
 
@@ -405,9 +476,14 @@ button:disabled {
 }
 
 
+/* =====================================================
+   FILE NAME
+   ===================================================== */
+
 .file-name {
 
-    flex: 1;
+    flex:
+        1;
 
     font-size:
         15px;
@@ -551,24 +627,6 @@ button:disabled {
 
 
 /* =====================================================
-   LOADING
-   ===================================================== */
-
-.loading {
-
-    text-align:
-        center;
-
-    padding:
-        25px 10px;
-
-    color:
-        #64748b;
-
-}
-
-
-/* =====================================================
    FOOTER
    ===================================================== */
 
@@ -584,10 +642,24 @@ button:disabled {
         #64748b;
 
     font-size:
-        14px;
+        13px;
 
     line-height:
         1.7;
+
+}
+
+
+.copyright {
+
+    margin-top:
+        10px;
+
+    font-size:
+        12px;
+
+    color:
+        #475569;
 
 }
 
@@ -597,6 +669,13 @@ button:disabled {
    ===================================================== */
 
 @media (max-width: 600px) {
+
+    .header {
+
+        padding:
+            23px 12px 26px;
+
+    }
 
 
     .header h1 {
@@ -627,6 +706,14 @@ button:disabled {
 
         padding:
             16px;
+
+    }
+
+
+    #srn {
+
+        font-size:
+            17px;
 
     }
 
@@ -681,6 +768,7 @@ button:disabled {
 </div>
 
 
+
 <div class="container">
 
 
@@ -690,11 +778,12 @@ button:disabled {
 
 <div class="card">
 
+
     <label
         class="label"
         for="srn">
 
-        Enter Your SRN
+        Enter Your Complete SRN
 
     </label>
 
@@ -703,8 +792,10 @@ button:disabled {
         id="srn"
         type="text"
         placeholder="Example: PES1UG23CS001"
+        maxlength="13"
         autocomplete="off"
         autocapitalize="characters"
+        spellcheck="false"
     >
 
 
@@ -724,7 +815,9 @@ button:disabled {
 
     </div>
 
+
 </div>
+
 
 
 <!-- =====================================================
@@ -737,6 +830,8 @@ button:disabled {
     style="display:none;"
 >
 
+
+    <!-- WELCOME -->
 
     <div
         id="welcome"
@@ -779,7 +874,7 @@ button:disabled {
     </button>
 
 
-    <!-- COUNT -->
+    <!-- SELECTED COUNT -->
 
     <div
         id="selectedCount"
@@ -793,7 +888,8 @@ button:disabled {
     <!-- FILE LIST -->
 
     <div
-        id="fileList">
+        id="fileList"
+        class="file-list">
 
     </div>
 
@@ -814,6 +910,7 @@ button:disabled {
 </div>
 
 
+
 <!-- =====================================================
      FOOTER
      ===================================================== -->
@@ -830,14 +927,18 @@ button:disabled {
 
     <br>
 
-    PES University 
-      <br>
-      © 2026 Selva Kumar. All Rights Reserved.
+    PES University
 
-    <br>
 
-    For Educational Use Only.
+    <div class="copyright">
 
+        © 2026 Selva Kumar. All Rights Reserved.
+
+        <br>
+
+        For Educational Use Only.
+
+    </div>
 
 </div>
 
@@ -867,25 +968,22 @@ const BRANCH =
 
 
 /* =========================================================
-   SUPPORTED FILE TYPES
+   COMPLETE SRN FORMAT
+   =========================================================
+
+   Example:
+
+   PES1UG23CS001
+
    ========================================================= */
 
-
-const SUPPORTED_EXTENSIONS = [
-
-    "pdf",
-
-    "doc",
-
-    "docx"
-
-];
+const SRN_PATTERN =
+    /^PES1UG\d{2}[A-Z]{2}\d{3}$/;
 
 
 /* =========================================================
    VARIABLES
    ========================================================= */
-
 
 let availableFiles = [];
 
@@ -893,46 +991,74 @@ let studentSRN = "";
 
 
 /* =========================================================
-   LOAD REPOSITORY FILES
+   LOAD FILES
    ========================================================= */
-
 
 async function loadFiles() {
 
 
-    /* -----------------------------------------------
-       Get SRN
-       ----------------------------------------------- */
+    /* -----------------------------------------------------
+       GET SRN
+       ----------------------------------------------------- */
+
+    const input =
+        document.getElementById(
+            "srn"
+        );
+
 
     studentSRN =
-        document
-        .getElementById("srn")
-        .value
+        input.value
         .trim()
         .toUpperCase();
 
 
-    /* -----------------------------------------------
-       Validate SRN
-       ----------------------------------------------- */
+    /* -----------------------------------------------------
+       EMPTY
+       ----------------------------------------------------- */
 
     if (
         studentSRN === ""
     ) {
 
         showStatus(
-            "Please enter your SRN.",
+            "Please enter your complete SRN.",
             "error"
         );
+
+        input.focus();
 
         return;
 
     }
 
 
-    /* -----------------------------------------------
-       Loading state
-       ----------------------------------------------- */
+    /* -----------------------------------------------------
+       VALIDATE COMPLETE SRN
+       ----------------------------------------------------- */
+
+    if (
+        !SRN_PATTERN.test(
+            studentSRN
+        )
+    ) {
+
+        showStatus(
+            "Please enter your complete SRN. " +
+            "Example: PES1UG23CS001",
+            "error"
+        );
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    /* -----------------------------------------------------
+       BUTTON
+       ----------------------------------------------------- */
 
     const submitButton =
         document.getElementById(
@@ -957,13 +1083,14 @@ async function loadFiles() {
     try {
 
 
-        /*
-        =================================================
-        Get repository root
-        =================================================
-        */
+        /* =================================================
+           GITHUB CONTENTS API
 
-        const rootURL =
+           Reads repository files automatically.
+           ================================================= */
+
+
+        const apiURL =
             "https://api.github.com/repos/" +
             OWNER +
             "/" +
@@ -974,8 +1101,11 @@ async function loadFiles() {
 
         const response =
             await fetch(
-                rootURL,
+                apiURL,
                 {
+                    cache:
+                        "no-store",
+
                     headers: {
                         "Accept":
                             "application/vnd.github+json"
@@ -989,7 +1119,7 @@ async function loadFiles() {
         ) {
 
             throw new Error(
-                "Unable to access GitHub."
+                "GitHub repository unavailable."
             );
 
         }
@@ -999,20 +1129,16 @@ async function loadFiles() {
             await response.json();
 
 
-        /*
-        =================================================
-        Clear previous files
-        =================================================
-        */
+        /* =================================================
+           CLEAR PREVIOUS FILES
+           ================================================= */
 
         availableFiles = [];
 
 
-        /*
-        =================================================
-        Read everything
-        =================================================
-        */
+        /* =================================================
+           PROCESS ROOT
+           ================================================= */
 
         for (
             const item of rootItems
@@ -1020,39 +1146,7 @@ async function loadFiles() {
 
 
             /*
-            Ignore index.html
-            */
-
-            if (
-                item.name
-                .toLowerCase()
-                ===
-                "index.html"
-            ) {
-
-                continue;
-
-            }
-
-
-            /*
-            Ignore README
-            */
-
-            if (
-                item.name
-                .toLowerCase()
-                ===
-                "readme.md"
-            ) {
-
-                continue;
-
-            }
-
-
-            /*
-            File
+            If it is a file
             */
 
             if (
@@ -1060,7 +1154,7 @@ async function loadFiles() {
                 "file"
             ) {
 
-                addSupportedFile(
+                addFile(
                     item
                 );
 
@@ -1068,7 +1162,7 @@ async function loadFiles() {
 
 
             /*
-            Folder
+            If it is a folder
 
             Search inside it.
             */
@@ -1078,7 +1172,7 @@ async function loadFiles() {
                 "dir"
             ) {
 
-                await readFolder(
+                await scanFolder(
                     item.path
                 );
 
@@ -1087,61 +1181,84 @@ async function loadFiles() {
         }
 
 
-        /*
-        =================================================
-        No files
-        =================================================
-        */
+        /* =================================================
+           REMOVE DUPLICATES
+           ================================================= */
+
+        availableFiles =
+            availableFiles.filter(
+                function(
+                    file,
+                    index,
+                    array
+                ) {
+
+                    return (
+                        index ===
+                        array.findIndex(
+                            function(other) {
+
+                                return (
+                                    other.path ===
+                                    file.path
+                                );
+
+                            }
+                        )
+                    );
+
+                }
+            );
+
+
+        /* =================================================
+           SORT
+           ================================================= */
+
+        availableFiles.sort(
+            function(a, b) {
+
+                return a.name.localeCompare(
+                    b.name,
+                    undefined,
+                    {
+                        numeric:
+                            true,
+
+                        sensitivity:
+                            "base"
+                    }
+                );
+
+            }
+        );
+
+
+        /* =================================================
+           CHECK
+           ================================================= */
 
         if (
             availableFiles.length === 0
         ) {
 
             throw new Error(
-                "No PDF or Word files found."
+                "No files found in repository."
             );
 
         }
 
 
-        /*
-        =================================================
-        Sort by actual filename
-        =================================================
-        */
-
-        availableFiles.sort(
-            function(a, b) {
-
-                return a.name
-                    .localeCompare(
-                        b.name,
-                        undefined,
-                        {
-                            numeric: true,
-                            sensitivity:
-                                "base"
-                        }
-                    );
-
-            }
-        );
-
-
-        /*
-        =================================================
-        Display
-        =================================================
-        */
+        /* =================================================
+           DISPLAY
+           ================================================= */
 
         displayFiles();
 
 
-        /*
-        =================================================
-        Show file card
-        =================================================
-        */
+        /* =================================================
+           SHOW CARD
+           ================================================= */
 
         document
             .getElementById(
@@ -1151,11 +1268,9 @@ async function loadFiles() {
             "block";
 
 
-        /*
-        =================================================
-        Welcome
-        =================================================
-        */
+        /* =================================================
+           WELCOME
+           ================================================= */
 
         document
             .getElementById(
@@ -1166,11 +1281,9 @@ async function loadFiles() {
             studentSRN;
 
 
-        /*
-        =================================================
-        File count
-        =================================================
-        */
+        /* =================================================
+           COUNT
+           ================================================= */
 
         document
             .getElementById(
@@ -1181,14 +1294,12 @@ async function loadFiles() {
             " files available";
 
 
-        /*
-        =================================================
-        Success
-        =================================================
-        */
+        /* =================================================
+           SUCCESS
+           ================================================= */
 
         showStatus(
-            "Files loaded successfully.",
+            "All files loaded successfully.",
             "success"
         );
 
@@ -1228,13 +1339,27 @@ async function loadFiles() {
 
 
 /* =========================================================
-   READ FOLDER RECURSIVELY
+   SCAN FOLDER
    ========================================================= */
 
-
-async function readFolder(
+async function scanFolder(
     folderPath
 ) {
+
+
+    const encodedFolder =
+        folderPath
+        .split("/")
+        .map(
+            function(part) {
+
+                return encodeURIComponent(
+                    part
+                );
+
+            }
+        )
+        .join("/");
 
 
     const folderURL =
@@ -1243,9 +1368,7 @@ async function readFolder(
         "/" +
         REPOSITORY +
         "/contents/" +
-        encodePath(
-            folderPath
-        ) +
+        encodedFolder +
         "?ref=" +
         BRANCH;
 
@@ -1254,6 +1377,9 @@ async function readFolder(
         await fetch(
             folderURL,
             {
+                cache:
+                    "no-store",
+
                 headers: {
                     "Accept":
                         "application/vnd.github+json"
@@ -1280,32 +1406,24 @@ async function readFolder(
     ) {
 
 
-        /*
-        File
-        */
-
         if (
             item.type ===
             "file"
         ) {
 
-            addSupportedFile(
+            addFile(
                 item
             );
 
         }
 
 
-        /*
-        Folder
-        */
-
         else if (
             item.type ===
             "dir"
         ) {
 
-            await readFolder(
+            await scanFolder(
                 item.path
             );
 
@@ -1317,17 +1435,68 @@ async function readFolder(
 
 
 /* =========================================================
-   ADD SUPPORTED FILE
+   ADD EVERY FILE
    ========================================================= */
 
-
-function addSupportedFile(
+function addFile(
     item
 ) {
 
 
+    /*
+    Actual GitHub filename
+    */
+
     const filename =
         item.name;
+
+
+    /*
+    Don't show the website itself
+    */
+
+    if (
+        filename
+        .toLowerCase()
+        ===
+        "index.html"
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+    We want EVERY OTHER FILE.
+
+    No extension filtering.
+
+    PDF
+    DOC
+    DOCX
+    PPT
+    PPTX
+    C
+    CPP
+    JAVA
+    PY
+    TXT
+    ZIP
+    JPG
+    PNG
+    etc.
+
+    Everything is supported.
+    */
+
+
+    /*
+    File extension
+    */
+
+    let extension =
+        "";
 
 
     const dot =
@@ -1335,93 +1504,36 @@ function addSupportedFile(
 
 
     if (
-        dot === -1
+        dot !== -1
     ) {
 
-        return;
-
-    }
-
-
-    const extension =
-        filename
-        .substring(
-            dot + 1
-        )
-        .toLowerCase();
-
-
-    /*
-    Only PDF / DOC / DOCX
-    */
-
-    if (
-        !SUPPORTED_EXTENSIONS
-            .includes(
-                extension
+        extension =
+            filename
+            .substring(
+                dot + 1
             )
-    ) {
-
-        return;
+            .toUpperCase();
 
     }
 
 
     /*
-    Avoid duplicate files
+    Add
     */
-
-    const alreadyExists =
-        availableFiles.some(
-            function(file) {
-
-                return (
-                    file.path ===
-                    item.path
-                );
-
-            }
-        );
-
-
-    if (
-        alreadyExists
-    ) {
-
-        return;
-
-    }
-
 
     availableFiles.push({
 
-        /*
-        EXACT GitHub filename
-        */
-
         name:
-            item.name,
-
-        /*
-        Full repository path
-        */
+            filename,
 
         path:
             item.path,
 
-        /*
-        Direct GitHub download URL
-        */
-
-        download_url:
-            item.download_url,
-
-        /*
-        Extension
-        */
-
         extension:
-            extension
+            extension,
+
+        downloadURL:
+            item.download_url
 
     });
 
@@ -1429,35 +1541,8 @@ function addSupportedFile(
 
 
 /* =========================================================
-   ENCODE FOLDER PATH
-   ========================================================= */
-
-
-function encodePath(
-    path
-) {
-
-
-    return path
-        .split("/")
-        .map(
-            function(part) {
-
-                return encodeURIComponent(
-                    part
-                );
-
-            }
-        )
-        .join("/");
-
-}
-
-
-/* =========================================================
    DISPLAY FILES
    ========================================================= */
-
 
 function displayFiles() {
 
@@ -1472,19 +1557,16 @@ function displayFiles() {
         "";
 
 
-    /*
-    =====================================================
-    Display every file
-    =====================================================
-    */
-
     availableFiles.forEach(
-        function(file, index) {
+        function(
+            file,
+            index
+        ) {
 
 
-            /*
-            File row
-            */
+            /* ---------------------------------------------
+               ROW
+               --------------------------------------------- */
 
             const row =
                 document.createElement(
@@ -1496,9 +1578,9 @@ function displayFiles() {
                 "file-item";
 
 
-            /*
-            Checkbox
-            */
+            /* ---------------------------------------------
+               CHECKBOX
+               --------------------------------------------- */
 
             const checkbox =
                 document.createElement(
@@ -1524,9 +1606,9 @@ function displayFiles() {
             );
 
 
-            /*
-            EXACT filename
-            */
+            /* ---------------------------------------------
+               ACTUAL FILENAME
+               --------------------------------------------- */
 
             const name =
                 document.createElement(
@@ -1542,9 +1624,9 @@ function displayFiles() {
                 file.name;
 
 
-            /*
-            File extension
-            */
+            /* ---------------------------------------------
+               TYPE
+               --------------------------------------------- */
 
             const type =
                 document.createElement(
@@ -1557,13 +1639,13 @@ function displayFiles() {
 
 
             type.textContent =
-                file.extension
-                .toUpperCase();
+                file.extension ||
+                "FILE";
 
 
-            /*
-            Add
-            */
+            /* ---------------------------------------------
+               ADD
+               --------------------------------------------- */
 
             row.appendChild(
                 checkbox
@@ -1594,7 +1676,6 @@ function displayFiles() {
    SELECT ALL
    ========================================================= */
 
-
 function selectAllFiles() {
 
 
@@ -1621,7 +1702,6 @@ function selectAllFiles() {
    CLEAR ALL
    ========================================================= */
 
-
 function clearAllFiles() {
 
 
@@ -1645,9 +1725,8 @@ function clearAllFiles() {
 
 
 /* =========================================================
-   UPDATE COUNT
+   SELECTED COUNT
    ========================================================= */
-
 
 function updateSelectedCount() {
 
@@ -1678,9 +1757,8 @@ function updateSelectedCount() {
 
 
 /* =========================================================
-   DIRECT DOWNLOAD
+   DOWNLOAD SELECTED FILES
    ========================================================= */
-
 
 async function downloadSelectedFiles() {
 
@@ -1716,11 +1794,13 @@ async function downloadSelectedFiles() {
         true;
 
 
-    /*
-    =====================================================
-    Download each selected file directly
-    =====================================================
-    */
+    /* =====================================================
+       DIRECT DOWNLOAD
+
+       NO ZIP
+       NO CONVERSION
+       ===================================================== */
+
 
     for (
         let i = 0;
@@ -1743,9 +1823,9 @@ async function downloadSelectedFiles() {
             availableFiles[index];
 
 
-        /*
-        Progress
-        */
+        /* ---------------------------------------------
+           Progress
+           --------------------------------------------- */
 
         button.textContent =
             "⬇️ Downloading " +
@@ -1754,9 +1834,9 @@ async function downloadSelectedFiles() {
             selected.length;
 
 
-        /*
-        Direct GitHub URL
-        */
+        /* ---------------------------------------------
+           Create download link
+           --------------------------------------------- */
 
         const link =
             document.createElement(
@@ -1765,8 +1845,12 @@ async function downloadSelectedFiles() {
 
 
         link.href =
-            file.download_url;
+            file.downloadURL;
 
+
+        /*
+        Preserve original filename
+        */
 
         link.download =
             file.name;
@@ -1779,6 +1863,10 @@ async function downloadSelectedFiles() {
         link.rel =
             "noopener";
 
+
+        /* ---------------------------------------------
+           Start download
+           --------------------------------------------- */
 
         document
             .body
@@ -1798,19 +1886,21 @@ async function downloadSelectedFiles() {
 
 
         /*
-        Delay between downloads
+        Delay between files.
+
+        Helps mobile browsers.
         */
 
         await delay(
-            1000
+            1200
         );
 
     }
 
 
-    /*
-    Reset
-    */
+    /* =====================================================
+       RESET
+       ===================================================== */
 
     button.textContent =
         "📥 DOWNLOAD SELECTED FILES";
@@ -1832,11 +1922,9 @@ async function downloadSelectedFiles() {
    DELAY
    ========================================================= */
 
-
 function delay(
     milliseconds
 ) {
-
 
     return new Promise(
         function(resolve) {
@@ -1855,7 +1943,6 @@ function delay(
 /* =========================================================
    STATUS
    ========================================================= */
-
 
 function showStatus(
     message,
@@ -1888,7 +1975,6 @@ function showStatus(
    ENTER KEY
    ========================================================= */
 
-
 document
     .getElementById(
         "srn"
@@ -1904,6 +1990,26 @@ document
                 loadFiles();
 
             }
+
+        }
+    );
+
+
+/* =========================================================
+   AUTOMATIC UPPERCASE
+   ========================================================= */
+
+document
+    .getElementById(
+        "srn"
+    )
+    .addEventListener(
+        "input",
+        function() {
+
+            this.value =
+                this.value
+                .toUpperCase();
 
         }
     );
