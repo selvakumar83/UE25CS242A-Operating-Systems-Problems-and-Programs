@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#173f5f">
+
+    <title>
+        Operating Systems - Study Materials
+    </title>
+
+
+    <!--
+    =====================================================
+    JSZip Library
+    Used to create ZIP file in the student's browser
+    =====================================================
+    -->
+
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
+    </script>
+
+
+    <style>
+
+        /*
+        =====================================================
+        GENERAL
+        =====================================================
+        */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            padding: 0;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f3f6f9;
+
+            color:
+                #222;
+
+        }
+
+
+        /*
+        =====================================================
+        MAIN CONTAINER
+        =====================================================
+        */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 700px;
+
+            margin: auto;
+
+            padding:
+                12px;
+
+        }
+
+
+        /*
+        =====================================================
+        HEADER
+        =====================================================
+        */
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #173f5f,
+                    #20639b
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding:
+                24px 15px;
+
+            border-radius:
+                0 0 22px 22px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.15);
+
+        }
+
+
+        .header h1 {
+
+            margin: 0;
+
+            font-size:
+                25px;
+
+        }
+
+
+        .header p {
+
+            margin:
+                8px 0 0;
+
+            font-size:
+                14px;
+
+        }
+
+
+        /*
+        =====================================================
+        CARD
+        =====================================================
+        */
+
+        .card {
+
+            background:
+                white;
+
+            margin-top:
+                16px;
+
+            padding:
+                18px;
+
+            border-radius:
+                16px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        /*
+        =====================================================
+        SRN
+        =====================================================
+        */
+
+        .label {
+
+            display:
+                block;
+
+            font-weight:
+                bold;
+
+            margin-bottom:
+                8px;
+
+            font-size:
+                16px;
+
+        }
+
+
+        #srn {
+
+            width:
+                100%;
+
+            padding:
+                14px;
+
+            font-size:
+                17px;
+
+            border:
+                1px solid #ccc;
+
+            border-radius:
+                10px;
+
+            outline:
+                none;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        #srn:focus {
+
+            border-color:
+                #20639b;
+
+        }
+
+
+        /*
+        =====================================================
+        BUTTONS
+        =====================================================
+        */
+
+        button {
+
+            width:
+                100%;
+
+            min-height:
+                48px;
+
+            border:
+                none;
+
+            border-radius:
+                10px;
+
+            margin-top:
+                10px;
+
+            padding:
+                12px;
+
+            font-size:
+                16px;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .submit-btn {
+
+            background:
+                #20639b;
+
+            color:
+                white;
+
+        }
+
+
+        .select-btn {
+
+            background:
+                #e9eef3;
+
+            color:
+                #173f5f;
+
+        }
+
+
+        .download-btn {
+
+            background:
+                #198754;
+
+            color:
+                white;
+
+        }
+
+
+        button:disabled {
+
+            background:
+                #aaa;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        /*
+        =====================================================
+        WELCOME
+        =====================================================
+        */
+
+        .welcome {
+
+            background:
+                #eaf5ff;
+
+            color:
+                #174a70;
+
+            padding:
+                12px;
+
+            border-radius:
+                10px;
+
+            margin-bottom:
+                15px;
+
+            text-align:
+                center;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        /*
+        =====================================================
+        CATEGORY
+        =====================================================
+        */
+
+        .category {
+
+            margin-top:
+                22px;
+
+            margin-bottom:
+                8px;
+
+            padding:
+                10px;
+
+            background:
+                #f0f4f8;
+
+            border-radius:
+                9px;
+
+            font-size:
+                18px;
+
+            font-weight:
+                bold;
+
+            color:
+                #173f5f;
+
+        }
+
+
+        /*
+        =====================================================
+        FILE ITEM
+        =====================================================
+        */
+
+        .file-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding:
+                12px 6px;
+
+            border-bottom:
+                1px solid #eeeeee;
+
+        }
+
+
+        .file-item:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .file-checkbox {
+
+            width:
+                21px !important;
+
+            height:
+                21px;
+
+            margin:
+                0 12px 0 0;
+
+            flex-shrink:
+                0;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .file-name {
+
+            font-size:
+                15px;
+
+            line-height:
+                1.4;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        /*
+        =====================================================
+        SELECTED COUNT
+        =====================================================
+        */
+
+        .selected-count {
+
+            text-align:
+                center;
+
+            margin:
+                15px 0;
+
+            font-size:
+                16px;
+
+            font-weight:
+                bold;
+
+            color:
+                #173f5f;
+
+        }
+
+
+        /*
+        =====================================================
+        STATUS
+        =====================================================
+        */
+
+        .status {
+
+            display:
+                none;
+
+            padding:
+                12px;
+
+            border-radius:
+                10px;
+
+            margin-top:
+                12px;
+
+            text-align:
+                center;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .status.success {
+
+            display:
+                block;
+
+            background:
+                #e8f7ee;
+
+            color:
+                #126b3d;
+
+        }
+
+
+        .status.error {
+
+            display:
+                block;
+
+            background:
+                #fdecec;
+
+            color:
+                #a12626;
+
+        }
+
+
+        .status.info {
+
+            display:
+                block;
+
+            background:
+                #eaf2fb;
+
+            color:
+                #174a70;
+
+        }
+
+
+        /*
+        =====================================================
+        LOADING
+        =====================================================
+        */
+
+        .loading {
+
+            text-align:
+                center;
+
+            padding:
+                25px 10px;
+
+            color:
+                #666;
+
+        }
+
+
+        /*
+        =====================================================
+        FOOTER
+        =====================================================
+        */
+
+        .footer {
+
+            text-align:
+                center;
+
+            padding:
+                25px 10px;
+
+            font-size:
+                13px;
+
+            color:
+                #666;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /*
+        =====================================================
+        MOBILE
+        =====================================================
+        */
+
+        @media
+        (max-width: 600px) {
+
+            .header {
+
+                padding:
+                    20px 12px;
+
+            }
+
+
+            .header h1 {
+
+                font-size:
+                    22px;
+
+            }
+
+
+            .header p {
+
+                font-size:
+                    13px;
+
+            }
+
+
+            .card {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .category {
+
+                font-size:
+                    17px;
+
+            }
+
+
+            .file-name {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            button {
+
+                font-size:
+                    15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!--
+=========================================================
+HEADER
+=========================================================
+-->
+
+<div class="header">
+
+    <h1>
+        💻 Operating Systems
+    </h1>
+
+    <p>
+        Problems & Programs
+    </p>
+
+</div>
+
+
+<div class="container">
+
+
+    <!--
+    =====================================================
+    SRN CARD
+    =====================================================
+    -->
+
+    <div class="card">
+
+        <label
+            class="label"
+            for="srn">
+
+            Enter Your SRN
+
+        </label>
+
+
+        <input
+            type="text"
+            id="srn"
+            placeholder="Example: PES1UG23CS001"
+            autocomplete="off">
+
+
+        <button
+            class="submit-btn"
+            onclick="loadRepositoryFiles()">
+
+            🔍 SUBMIT
+
+        </button>
+
+
+        <div
+            id="status"
+            class="status">
+
+        </div>
+
+    </div>
+
+
+    <!--
+    =====================================================
+    FILE CARD
+    =====================================================
+    -->
+
+    <div
+        class="card"
+        id="fileCard"
+        style="display:none;">
+
+
+        <div
+            class="welcome"
+            id="welcome">
+
+        </div>
+
+
+        <h2>
+            📂 Available Materials
+        </h2>
+
+
+        <p>
+            Select the files you need.
+        </p>
+
+
+        <!-- SELECT ALL -->
+
+        <button
+            class="select-btn"
+            onclick="selectAllFiles()">
+
+            ☑️ SELECT ALL
+
+        </button>
+
+
+        <!-- CLEAR ALL -->
+
+        <button
+            class="select-btn"
+            onclick="clearAllFiles()">
+
+            ⬜ CLEAR ALL
+
+        </button>
+
+
+        <!-- COUNT -->
+
+        <div
+            class="selected-count"
+            id="selectedCount">
+
+            Selected Files: 0
+
+        </div>
+
+
+        <!-- FILE LIST -->
+
+        <div
+            id="fileList">
+
+        </div>
+
+
+        <!-- DOWNLOAD -->
+
+        <button
+            class="download-btn"
+            id="downloadButton"
+            onclick="downloadSelectedFiles()"
+            disabled>
+
+            📦 DOWNLOAD SELECTED FILES
+
+        </button>
+
+
+    </div>
+
+
+    <!--
+    =====================================================
+    FOOTER
+    =====================================================
+    -->
+
+    <div class="footer">
+
+        <strong>
+            3 Sem CSE (AI & ML)
+        </strong>
+
+        <br>
+
+        Operating Systems
+
+        <br>
+
+        PES University
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+/*
+==========================================================
+GITHUB CONFIGURATION
+==========================================================
+*/
+
+const GITHUB_OWNER =
+    "selvakumar83";
+
+
+const GITHUB_REPOSITORY =
+    "UE25CS242A-Operating-Systems-Problems-and-Programs";
+
+
+const GITHUB_BRANCH =
+    "main";
+
+
+/*
+==========================================================
+VARIABLES
+==========================================================
+*/
+
+let repositoryFiles = [];
+
+let studentSRN = "";
+
+
+/*
+==========================================================
+LOAD FILES
+==========================================================
+*/
+
+async function loadRepositoryFiles() {
+
+
+    /*
+    Get SRN
+    */
+
+    const srnElement =
+        document.getElementById("srn");
+
+
+    studentSRN =
+        srnElement.value
+        .trim()
+        .toUpperCase();
+
+
+    /*
+    Validate SRN
+    */
+
+    if (studentSRN === "") {
+
+        showStatus(
+            "Please enter your SRN.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+    Basic SRN validation
+    */
+
+    if (studentSRN.length < 5) {
+
+        showStatus(
+            "Please enter a valid SRN.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+    Show loading
+    */
+
+    showStatus(
+        "Loading files from GitHub...",
+        "info"
+    );
+
+
+    /*
+    GitHub API URL
+    */
+
+    const apiURL =
+        `https://api.github.com/repos/` +
+        `${GITHUB_OWNER}/` +
+        `${GITHUB_REPOSITORY}/` +
+        `git/trees/` +
+        `${GITHUB_BRANCH}?recursive=1`;
+
+
+    try {
+
+
+        /*
+        Call GitHub API
+        */
+
+        const response =
+            await fetch(apiURL);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "GitHub repository could not be accessed."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+        Check response
+        */
+
+        if (!data.tree) {
+
+            throw new Error(
+                "No files found."
+            );
+
+        }
+
+
+        /*
+        Get only files
+        */
+
+        repositoryFiles =
+            data.tree.filter(
+                item =>
+                    item.type === "blob"
+            );
+
+
+        /*
+        Remove website files
+        */
+
+        repositoryFiles =
+            repositoryFiles.filter(
+                file => {
+
+                    const name =
+                        file.path.toLowerCase();
+
+
+                    return (
+                        name !== "index.html" &&
+                        !name.endsWith(".js") &&
+                        !name.endsWith(".css")
+                    );
+
+                }
+            );
+
+
+        /*
+        Check files
+        */
+
+        if (
+            repositoryFiles.length === 0
+        ) {
+
+            throw new Error(
+                "No study material files found."
+            );
+
+        }
+
+
+        /*
+        Display
+        */
+
+        displayFiles();
+
+
+        /*
+        Show file card
+        */
+
+        document
+            .getElementById("fileCard")
+            .style.display =
+            "block";
+
+
+        /*
+        Welcome
+        */
+
+        document
+            .getElementById("welcome")
+            .textContent =
+            `Welcome, ${studentSRN}`;
+
+
+        /*
+        Status
+        */
+
+        showStatus(
+            `${repositoryFiles.length} files loaded successfully.`,
+            "success"
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            "Unable to load files from GitHub. " +
+            "Please try again.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/*
+==========================================================
+DISPLAY FILES
+==========================================================
+*/
+
+function displayFiles() {
+
+
+    const fileList =
+        document.getElementById(
+            "fileList"
+        );
+
+
+    fileList.innerHTML = "";
+
+
+    /*
+    Group files by folder
+    */
+
+    const folders = {};
+
+
+    repositoryFiles.forEach(
+        file => {
+
+
+            const parts =
+                file.path.split("/");
+
+
+            let folderName =
+                "📁 General";
+
+
+            if (
+                parts.length > 1
+            ) {
+
+                folderName =
+                    "📁 " +
+                    parts
+                    .slice(
+                        0,
+                        parts.length - 1
+                    )
+                    .join(" / ");
+
+            }
+
+
+            if (
+                !folders[folderName]
+            ) {
+
+                folders[folderName] =
+                    [];
+
+            }
+
+
+            folders[folderName]
+                .push(file);
+
+        }
+    );
+
+
+    /*
+    Sort folders
+    */
+
+    const sortedFolders =
+        Object.keys(folders)
+        .sort();
+
+
+    /*
+    Create folder sections
+    */
+
+    sortedFolders.forEach(
+        folderName => {
+
+
+            /*
+            Category
+            */
+
+            const category =
+                document.createElement(
+                    "div"
+                );
+
+
+            category.className =
+                "category";
+
+
+            category.textContent =
+                folderName;
+
+
+            fileList.appendChild(
+                category
+            );
+
+
+            /*
+            Files
+            */
+
+            folders[folderName]
+                .sort(
+                    (a, b) =>
+                        a.path.localeCompare(
+                            b.path
+                        )
+                )
+                .forEach(
+                    file => {
+
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "file-item";
+
+
+                        /*
+                        Checkbox
+                        */
+
+                        const checkbox =
+                            document.createElement(
+                                "input"
+                            );
+
+
+                        checkbox.type =
+                            "checkbox";
+
+
+                        checkbox.className =
+                            "file-checkbox";
+
+
+                        checkbox.dataset.path =
+                            file.path;
+
+
+                        checkbox.addEventListener(
+                            "change",
+                            updateSelectedCount
+                        );
+
+
+                        /*
+                        Filename
+                        */
+
+                        const name =
+                            document.createElement(
+                                "span"
+                            );
+
+
+                        name.className =
+                            "file-name";
+
+
+                        const parts =
+                            file.path.split("/");
+
+
+                        name.textContent =
+                            parts[
+                                parts.length - 1
+                            ];
+
+
+                        /*
+                        Add
+                        */
+
+                        item.appendChild(
+                            checkbox
+                        );
+
+
+                        item.appendChild(
+                            name
+                        );
+
+
+                        fileList.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+/*
+==========================================================
+SELECT ALL
+==========================================================
+*/
+
+function selectAllFiles() {
+
+
+    const checkboxes =
+        document.querySelectorAll(
+            ".file-checkbox"
+        );
+
+
+    checkboxes.forEach(
+        checkbox => {
+
+            checkbox.checked =
+                true;
+
+        }
+    );
+
+
+    updateSelectedCount();
+
+}
+
+
+/*
+==========================================================
+CLEAR ALL
+==========================================================
+*/
+
+function clearAllFiles() {
+
+
+    const checkboxes =
+        document.querySelectorAll(
+            ".file-checkbox"
+        );
+
+
+    checkboxes.forEach(
+        checkbox => {
+
+            checkbox.checked =
+                false;
+
+        }
+    );
+
+
+    updateSelectedCount();
+
+}
+
+
+/*
+==========================================================
+UPDATE COUNT
+==========================================================
+*/
+
+function updateSelectedCount() {
+
+
+    const selected =
+        document.querySelectorAll(
+            ".file-checkbox:checked"
+        );
+
+
+    const count =
+        selected.length;
+
+
+    document
+        .getElementById(
+            "selectedCount"
+        )
+        .textContent =
+        `Selected Files: ${count}`;
+
+
+    document
+        .getElementById(
+            "downloadButton"
+        )
+        .disabled =
+        count === 0;
+
+}
+
+
+/*
+==========================================================
+DOWNLOAD SELECTED FILES
+==========================================================
+*/
+
+async function downloadSelectedFiles() {
+
+
+    const selected =
+        Array.from(
+            document.querySelectorAll(
+                ".file-checkbox:checked"
+            )
+        );
+
+
+    /*
+    Check selection
+    */
+
+    if (
+        selected.length === 0
+    ) {
+
+        alert(
+            "Please select at least one file."
+        );
+
+        return;
+
+    }
+
+
+    const downloadButton =
+        document.getElementById(
+            "downloadButton"
+        );
+
+
+    downloadButton.disabled =
+        true;
+
+
+    downloadButton.textContent =
+        "⏳ Preparing ZIP...";
+
+
+    try {
+
+
+        /*
+        Create ZIP
+        */
+
+        const zip =
+            new JSZip();
+
+
+        /*
+        Download each selected file
+        */
+
+        for (
+            let i = 0;
+            i < selected.length;
+            i++
+        ) {
+
+
+            const checkbox =
+                selected[i];
+
+
+            const filePath =
+                checkbox.dataset.path;
+
+
+            /*
+            GitHub raw URL
+            */
+
+            const rawURL =
+                `https://raw.githubusercontent.com/` +
+                `${GITHUB_OWNER}/` +
+                `${GITHUB_REPOSITORY}/` +
+                `${GITHUB_BRANCH}/` +
+                encodeURI(filePath);
+
+
+            /*
+            Fetch file
+            */
+
+            const response =
+                await fetch(rawURL);
+
+
+            if (
+                !response.ok
+            ) {
+
+                throw new Error(
+                    `Unable to download ${filePath}`
+                );
+
+            }
+
+
+            /*
+            Convert to Blob
+            */
+
+            const blob =
+                await response.blob();
+
+
+            /*
+            Keep folder structure
+            */
+
+            zip.file(
+                filePath,
+                blob
+            );
+
+
+            /*
+            Progress
+            */
+
+            downloadButton.textContent =
+                `⏳ Downloading ${i + 1}/${selected.length}...`;
+
+        }
+
+
+        /*
+        Generate ZIP
+        */
+
+        const zipBlob =
+            await zip.generateAsync(
+                {
+                    type: "blob",
+
+                    compression:
+                        "DEFLATE",
+
+                    compressionOptions:
+                        {
+                            level: 6
+                        }
+                }
+            );
+
+
+        /*
+        Create temporary URL
+        */
+
+        const downloadURL =
+            URL.createObjectURL(
+                zipBlob
+            );
+
+
+        /*
+        Create link
+        */
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            downloadURL;
+
+
+        link.download =
+            `${studentSRN}_OS_Materials.zip`;
+
+
+        document
+            .body
+            .appendChild(
+                link
+            );
+
+
+        /*
+        Start download
+        */
+
+        link.click();
+
+
+        /*
+        Remove link
+        */
+
+        document
+            .body
+            .removeChild(
+                link
+            );
+
+
+        /*
+        Release memory
+        */
+
+        URL.revokeObjectURL(
+            downloadURL
+        );
+
+
+        /*
+        Reset button
+        */
+
+        downloadButton.textContent =
+            "📦 DOWNLOAD SELECTED FILES";
+
+
+        downloadButton.disabled =
+            false;
+
+
+        /*
+        Success message
+        */
+
+        showStatus(
+            "Your ZIP file has been downloaded successfully.",
+            "success"
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Unable to download the selected files. " +
+            "Please try again."
+        );
+
+
+        downloadButton.textContent =
+            "📦 DOWNLOAD SELECTED FILES";
+
+
+        downloadButton.disabled =
+            false;
+
+    }
+
+}
+
+
+/*
+==========================================================
+STATUS MESSAGE
+==========================================================
+*/
+
+function showStatus(
+    message,
+    type
+) {
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        `status ${type}`;
+
+
+    status.style.display =
+        "block";
+
+}
+
+
+/*
+==========================================================
+ENTER KEY
+==========================================================
+*/
+
+document
+    .getElementById("srn")
+    .addEventListener(
+        "keypress",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                loadRepositoryFiles();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
