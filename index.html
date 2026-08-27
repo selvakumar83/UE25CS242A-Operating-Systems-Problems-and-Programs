@@ -9,55 +9,75 @@
       content="width=device-width, initial-scale=1.0">
 
 <meta name="theme-color"
-      content="#173f5f">
+      content="#075985">
 
 <title>
 Operating Systems - Problems & Programs
 </title>
 
-<!-- ZIP library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <style>
+
+/* =====================================================
+   RESET
+   ===================================================== */
 
 * {
     box-sizing: border-box;
 }
 
-body {
 
+html,
+body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+
+body {
 
     font-family:
         Arial,
         Helvetica,
         sans-serif;
 
-    background: #f3f6f9;
+    background: #f1f5f9;
 
     color: #222;
 
 }
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
 
 .header {
 
     background:
         linear-gradient(
             135deg,
-            #173f5f,
-            #20639b
+            #075985,
+            #0369a1
         );
 
     color: white;
 
     text-align: center;
 
-    padding: 25px 15px;
+    padding:
+        25px 15px 28px;
 
     border-radius:
-        0 0 22px 22px;
+        0 0 25px 25px;
+
+    box-shadow:
+        0 4px 15px
+        rgba(0,0,0,0.15);
 
 }
+
 
 .header h1 {
 
@@ -67,13 +87,20 @@ body {
 
 }
 
+
 .header p {
 
-    margin: 8px 0 0;
+    margin:
+        8px 0 0;
 
     font-size: 16px;
 
 }
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
 
 .container {
 
@@ -87,46 +114,60 @@ body {
 
 }
 
+
+/* =====================================================
+   CARD
+   ===================================================== */
+
 .card {
 
     background: white;
 
     margin-top: 18px;
 
-    padding: 18px;
+    padding: 20px;
 
-    border-radius: 16px;
+    border-radius: 18px;
 
     box-shadow:
-        0 3px 12px
+        0 3px 15px
         rgba(0,0,0,0.08);
 
 }
+
+
+/* =====================================================
+   SRN
+   ===================================================== */
 
 .label {
 
     display: block;
 
+    margin-bottom: 9px;
+
     font-size: 18px;
 
     font-weight: bold;
 
-    margin-bottom: 9px;
-
 }
+
 
 #srn {
 
     width: 100%;
 
-    padding: 15px;
+    height: 55px;
+
+    padding:
+        10px 15px;
 
     border:
-        1px solid #ccc;
+        1px solid #cbd5e1;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    font-size: 17px;
+    font-size: 18px;
 
     text-transform: uppercase;
 
@@ -134,25 +175,32 @@ body {
 
 }
 
+
 #srn:focus {
 
-    border-color: #20639b;
+    border:
+        2px solid #0284c7;
 
 }
+
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
 
 button {
 
     width: 100%;
 
-    min-height: 50px;
-
-    border: none;
-
-    border-radius: 10px;
+    min-height: 52px;
 
     margin-top: 12px;
 
     padding: 12px;
+
+    border: none;
+
+    border-radius: 12px;
 
     font-size: 16px;
 
@@ -162,222 +210,447 @@ button {
 
 }
 
-.submit-btn {
-
-    background: #20639b;
-
-    color: white;
-
-}
-
-.select-btn {
-
-    background: #e9eef3;
-
-    color: #173f5f;
-
-}
-
-.download-btn {
-
-    background: #198754;
-
-    color: white;
-
-}
 
 button:disabled {
 
-    background: #aaa;
+    background:
+        #94a3b8 !important;
+
+    cursor: not-allowed;
 
 }
 
-.status {
 
-    margin-top: 12px;
+.submit-button {
 
-    padding: 12px;
+    background:
+        #0369a1;
 
-    border-radius: 10px;
-
-    text-align: center;
-
-    display: none;
+    color: white;
 
 }
 
-.status.success {
 
-    display: block;
+.select-button {
 
-    background: #e8f7ee;
+    background:
+        #e2e8f0;
 
-    color: #126b3d;
-
-}
-
-.status.error {
-
-    display: block;
-
-    background: #fdecec;
-
-    color: #a12626;
+    color:
+        #0f172a;
 
 }
 
-.status.info {
 
-    display: block;
+.download-button {
 
-    background: #eaf2fb;
+    background:
+        #15803d;
 
-    color: #174a70;
+    color: white;
 
 }
+
+
+/* =====================================================
+   WELCOME
+   ===================================================== */
 
 .welcome {
 
-    background: #eaf5ff;
+    background:
+        #e0f2fe;
 
-    color: #174a70;
+    color:
+        #075985;
 
-    padding: 13px;
+    padding:
+        14px;
 
-    border-radius: 10px;
+    border-radius:
+        12px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    font-weight: bold;
+    font-size:
+        16px;
+
+    font-weight:
+        bold;
+
+    margin-bottom:
+        18px;
+
+}
+
+
+/* =====================================================
+   FILE INFORMATION
+   ===================================================== */
+
+.file-info {
+
+    text-align:
+        center;
+
+    color:
+        #64748b;
+
+    font-size:
+        14px;
+
+    margin:
+        10px 0 18px;
 
 }
 
-.category {
 
-    margin-top: 22px;
-
-    margin-bottom: 8px;
-
-    padding: 11px;
-
-    border-radius: 9px;
-
-    background: #f0f4f8;
-
-    color: #173f5f;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-}
+/* =====================================================
+   FILE ITEM
+   ===================================================== */
 
 .file-item {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    padding: 13px 5px;
+    min-height:
+        58px;
+
+    padding:
+        10px 4px;
 
     border-bottom:
-        1px solid #eee;
+        1px solid #e5e7eb;
 
 }
+
 
 .file-checkbox {
 
-    width: 22px !important;
+    appearance:
+        none;
 
-    height: 22px;
+    -webkit-appearance:
+        none;
 
-    margin: 0 12px 0 0;
+    width:
+        24px !important;
 
-    flex-shrink: 0;
+    height:
+        24px;
+
+    min-width:
+        24px;
+
+    margin:
+        0 13px 0 0;
+
+    border:
+        2px solid #64748b;
+
+    border-radius:
+        6px;
+
+    background:
+        white;
+
+    cursor:
+        pointer;
 
 }
+
+
+.file-checkbox:checked {
+
+    background:
+        #0284c7;
+
+    border-color:
+        #0284c7;
+
+    position:
+        relative;
+
+}
+
+
+.file-checkbox:checked::after {
+
+    content:
+        "✓";
+
+    color:
+        white;
+
+    position:
+        absolute;
+
+    font-size:
+        17px;
+
+    font-weight:
+        bold;
+
+    left:
+        3px;
+
+    top:
+        -1px;
+
+}
+
 
 .file-name {
 
-    font-size: 15px;
+    flex: 1;
 
-    line-height: 1.4;
+    font-size:
+        15px;
 
-    word-break: break-word;
+    line-height:
+        1.4;
+
+    word-break:
+        break-word;
 
 }
+
+
+/* =====================================================
+   FILE TYPE
+   ===================================================== */
+
+.file-type {
+
+    margin-left:
+        8px;
+
+    padding:
+        4px 7px;
+
+    border-radius:
+        6px;
+
+    background:
+        #e0f2fe;
+
+    color:
+        #075985;
+
+    font-size:
+        10px;
+
+    font-weight:
+        bold;
+
+    flex-shrink:
+        0;
+
+}
+
+
+/* =====================================================
+   SELECTED COUNT
+   ===================================================== */
 
 .selected-count {
 
-    text-align: center;
+    margin:
+        17px 0;
 
-    font-weight: bold;
+    text-align:
+        center;
 
-    color: #173f5f;
+    font-size:
+        17px;
 
-    margin: 16px 0;
+    font-weight:
+        bold;
+
+    color:
+        #075985;
 
 }
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.status {
+
+    display:
+        none;
+
+    margin-top:
+        13px;
+
+    padding:
+        13px;
+
+    border-radius:
+        10px;
+
+    text-align:
+        center;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.4;
+
+}
+
+
+.status.info {
+
+    display:
+        block;
+
+    background:
+        #e0f2fe;
+
+    color:
+        #075985;
+
+}
+
+
+.status.success {
+
+    display:
+        block;
+
+    background:
+        #dcfce7;
+
+    color:
+        #166534;
+
+}
+
+
+.status.error {
+
+    display:
+        block;
+
+    background:
+        #fee2e2;
+
+    color:
+        #991b1b;
+
+}
+
+
+/* =====================================================
+   LOADING
+   ===================================================== */
 
 .loading {
 
-    text-align: center;
+    text-align:
+        center;
 
-    padding: 25px;
+    padding:
+        25px 10px;
 
-    color: #666;
+    color:
+        #64748b;
 
 }
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
 
 .footer {
 
-    text-align: center;
+    text-align:
+        center;
 
-    padding: 25px 10px;
+    padding:
+        30px 10px;
 
-    color: #666;
+    color:
+        #64748b;
 
-    font-size: 13px;
+    font-size:
+        14px;
 
-    line-height: 1.7;
+    line-height:
+        1.7;
 
 }
 
-@media(max-width:600px) {
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
 
     .header h1 {
 
-        font-size: 23px;
+        font-size:
+            23px;
 
     }
+
 
     .header p {
 
-        font-size: 14px;
+        font-size:
+            14px;
 
     }
+
+
+    .container {
+
+        padding:
+            10px;
+
+    }
+
 
     .card {
 
-        padding: 15px;
+        padding:
+            16px;
 
     }
 
-    .category {
-
-        font-size: 17px;
-
-    }
 
     .file-name {
 
-        font-size: 14px;
+        font-size:
+            14px;
 
     }
 
+
+    .file-type {
+
+        font-size:
+            9px;
+
+    }
+
+
     button {
 
-        font-size: 15px;
+        font-size:
+            15px;
 
     }
 
@@ -391,15 +664,19 @@ button:disabled {
 <body>
 
 
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
 <div class="header">
 
-<h1>
-💻 Operating Systems
-</h1>
+    <h1>
+        💻 Operating Systems
+    </h1>
 
-<p>
-Problems & Programs
-</p>
+    <p>
+        Problems & Programs
+    </p>
 
 </div>
 
@@ -407,176 +684,218 @@ Problems & Programs
 <div class="container">
 
 
-<!-- SRN -->
+<!-- =====================================================
+     SRN CARD
+     ===================================================== -->
 
 <div class="card">
 
-<label class="label">
-Enter Your SRN
-</label>
+    <label
+        class="label"
+        for="srn">
 
-<input
-    type="text"
-    id="srn"
-    placeholder="Example: PES1UG23CS001"
-    autocomplete="off"
->
+        Enter Your SRN
 
-<button
-    class="submit-btn"
-    onclick="loadFiles()">
+    </label>
 
-🔍 SUBMIT
 
-</button>
+    <input
+        id="srn"
+        type="text"
+        placeholder="Example: PES1UG23CS001"
+        autocomplete="off"
+        autocapitalize="characters"
+    >
 
-<div
-    id="status"
-    class="status">
+
+    <button
+        id="submitButton"
+        class="submit-button"
+        onclick="loadFiles()">
+
+        🔍 SUBMIT
+
+    </button>
+
+
+    <div
+        id="status"
+        class="status">
+
+    </div>
+
 </div>
 
-</div>
 
-
-<!-- FILES -->
+<!-- =====================================================
+     FILE CARD
+     ===================================================== -->
 
 <div
-    class="card"
     id="fileCard"
+    class="card"
     style="display:none;"
 >
 
-<div
-    class="welcome"
-    id="welcome">
+
+    <div
+        id="welcome"
+        class="welcome">
+
+    </div>
+
+
+    <h2>
+        📂 Available Files
+    </h2>
+
+
+    <div
+        id="fileInfo"
+        class="file-info">
+
+    </div>
+
+
+    <!-- SELECT ALL -->
+
+    <button
+        class="select-button"
+        onclick="selectAllFiles()">
+
+        ☑️ SELECT ALL
+
+    </button>
+
+
+    <!-- CLEAR ALL -->
+
+    <button
+        class="select-button"
+        onclick="clearAllFiles()">
+
+        ⬜ CLEAR ALL
+
+    </button>
+
+
+    <!-- COUNT -->
+
+    <div
+        id="selectedCount"
+        class="selected-count">
+
+        Selected Files: 0
+
+    </div>
+
+
+    <!-- FILE LIST -->
+
+    <div
+        id="fileList">
+
+    </div>
+
+
+    <!-- DOWNLOAD -->
+
+    <button
+        id="downloadButton"
+        class="download-button"
+        onclick="downloadSelectedFiles()"
+        disabled>
+
+        📥 DOWNLOAD SELECTED FILES
+
+    </button>
+
+
 </div>
 
 
-<h2>
-📂 Available Files
-</h2>
-
-<p>
-Select the files you need to download.
-</p>
-
-
-<button
-    class="select-btn"
-    onclick="selectAll()">
-
-☑️ SELECT ALL
-
-</button>
-
-
-<button
-    class="select-btn"
-    onclick="clearAll()">
-
-⬜ CLEAR ALL
-
-</button>
-
-
-<div
-    class="selected-count"
-    id="selectedCount">
-
-Selected Files: 0
-
-</div>
-
-
-<div
-    id="fileList">
-
-</div>
-
-
-<button
-    class="download-btn"
-    id="downloadButton"
-    onclick="downloadFiles()"
-    disabled>
-
-📦 DOWNLOAD SELECTED FILES
-
-</button>
-
-</div>
-
-
-<!-- FOOTER -->
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
 
 <div class="footer">
 
-<strong>
-3 Sem CSE (AI & ML)
-</strong>
+    <strong>
+        3 Sem CSE (AI & ML)
+    </strong>
 
-<br>
+    <br>
 
-Operating Systems
+    Operating Systems
 
-<br>
+    <br>
 
-PES University
+    PES University
+
+</div>
+
 
 </div>
 
-
-</div>
 
 
 <script>
 
 
-/*
-========================================================
-GITHUB INFORMATION
-========================================================
-*/
+/* =========================================================
+   GITHUB CONFIGURATION
+   ========================================================= */
+
 
 const OWNER =
-"selvakumar83";
+    "selvakumar83";
+
 
 const REPOSITORY =
-"UE25CS242A-Operating-Systems-Problems-and-Programs";
+    "UE25CS242A-Operating-Systems-Problems-and-Programs";
+
 
 const BRANCH =
-"main";
+    "main";
 
 
-/*
-========================================================
-FILES.JSON URL
-========================================================
-*/
-
-const FILE_LIST_URL =
-`https://raw.githubusercontent.com/${OWNER}/${REPOSITORY}/${BRANCH}/files.json`;
+/* =========================================================
+   SUPPORTED FILE TYPES
+   ========================================================= */
 
 
-/*
-========================================================
-VARIABLES
-========================================================
-*/
+const SUPPORTED_EXTENSIONS = [
 
-let files = [];
+    "pdf",
+
+    "doc",
+
+    "docx"
+
+];
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+
+let availableFiles = [];
 
 let studentSRN = "";
 
 
-/*
-========================================================
-LOAD FILES
-========================================================
-*/
+/* =========================================================
+   LOAD REPOSITORY FILES
+   ========================================================= */
+
 
 async function loadFiles() {
 
+
+    /* -----------------------------------------------
+       Get SRN
+       ----------------------------------------------- */
 
     studentSRN =
         document
@@ -586,7 +905,13 @@ async function loadFiles() {
         .toUpperCase();
 
 
-    if (studentSRN === "") {
+    /* -----------------------------------------------
+       Validate SRN
+       ----------------------------------------------- */
+
+    if (
+        studentSRN === ""
+    ) {
 
         showStatus(
             "Please enter your SRN.",
@@ -598,8 +923,26 @@ async function loadFiles() {
     }
 
 
+    /* -----------------------------------------------
+       Loading state
+       ----------------------------------------------- */
+
+    const submitButton =
+        document.getElementById(
+            "submitButton"
+        );
+
+
+    submitButton.disabled =
+        true;
+
+
+    submitButton.textContent =
+        "⏳ LOADING...";
+
+
     showStatus(
-        "Loading files...",
+        "Reading files from GitHub...",
         "info"
     );
 
@@ -608,71 +951,237 @@ async function loadFiles() {
 
 
         /*
-        Get files.json
+        =================================================
+        Get repository root
+        =================================================
         */
+
+        const rootURL =
+            "https://api.github.com/repos/" +
+            OWNER +
+            "/" +
+            REPOSITORY +
+            "/contents/?ref=" +
+            BRANCH;
+
 
         const response =
             await fetch(
-                FILE_LIST_URL +
-                "?v=" +
-                Date.now()
+                rootURL,
+                {
+                    headers: {
+                        "Accept":
+                            "application/vnd.github+json"
+                    }
+                }
             );
 
 
-        if (!response.ok) {
+        if (
+            !response.ok
+        ) {
 
             throw new Error(
-                "files.json could not be loaded."
+                "Unable to access GitHub."
             );
 
         }
 
 
-        files =
+        const rootItems =
             await response.json();
 
 
+        /*
+        =================================================
+        Clear previous files
+        =================================================
+        */
+
+        availableFiles = [];
+
+
+        /*
+        =================================================
+        Read everything
+        =================================================
+        */
+
+        for (
+            const item of rootItems
+        ) {
+
+
+            /*
+            Ignore index.html
+            */
+
+            if (
+                item.name
+                .toLowerCase()
+                ===
+                "index.html"
+            ) {
+
+                continue;
+
+            }
+
+
+            /*
+            Ignore README
+            */
+
+            if (
+                item.name
+                .toLowerCase()
+                ===
+                "readme.md"
+            ) {
+
+                continue;
+
+            }
+
+
+            /*
+            File
+            */
+
+            if (
+                item.type ===
+                "file"
+            ) {
+
+                addSupportedFile(
+                    item
+                );
+
+            }
+
+
+            /*
+            Folder
+
+            Search inside it.
+            */
+
+            else if (
+                item.type ===
+                "dir"
+            ) {
+
+                await readFolder(
+                    item.path
+                );
+
+            }
+
+        }
+
+
+        /*
+        =================================================
+        No files
+        =================================================
+        */
+
         if (
-            !Array.isArray(files) ||
-            files.length === 0
+            availableFiles.length === 0
         ) {
 
             throw new Error(
-                "No files available."
+                "No PDF or Word files found."
             );
 
         }
 
 
         /*
-        Display files
+        =================================================
+        Sort by actual filename
+        =================================================
+        */
+
+        availableFiles.sort(
+            function(a, b) {
+
+                return a.name
+                    .localeCompare(
+                        b.name,
+                        undefined,
+                        {
+                            numeric: true,
+                            sensitivity:
+                                "base"
+                        }
+                    );
+
+            }
+        );
+
+
+        /*
+        =================================================
+        Display
+        =================================================
         */
 
         displayFiles();
 
 
         /*
-        Show card
+        =================================================
+        Show file card
+        =================================================
         */
 
         document
-        .getElementById("fileCard")
-        .style.display =
-        "block";
+            .getElementById(
+                "fileCard"
+            )
+            .style.display =
+            "block";
 
 
         /*
+        =================================================
         Welcome
+        =================================================
         */
 
         document
-        .getElementById("welcome")
-        .textContent =
-        `Welcome, ${studentSRN}`;
+            .getElementById(
+                "welcome"
+            )
+            .textContent =
+            "Welcome, " +
+            studentSRN;
 
+
+        /*
+        =================================================
+        File count
+        =================================================
+        */
+
+        document
+            .getElementById(
+                "fileInfo"
+            )
+            .textContent =
+            availableFiles.length +
+            " files available";
+
+
+        /*
+        =================================================
+        Success
+        =================================================
+        */
 
         showStatus(
-            `${files.length} files available.`,
+            "Files loaded successfully.",
             "success"
         );
 
@@ -681,74 +1190,289 @@ async function loadFiles() {
 
     catch(error) {
 
-        console.error(error);
+
+        console.error(
+            error
+        );
+
 
         showStatus(
-            "Unable to load files. Please try again.",
+            "Unable to load files from GitHub. " +
+            "Please try again.",
             "error"
         );
+
+    }
+
+
+    finally {
+
+
+        submitButton.disabled =
+            false;
+
+
+        submitButton.textContent =
+            "🔍 SUBMIT";
 
     }
 
 }
 
 
-/*
-========================================================
-DISPLAY FILES
-========================================================
-*/
+/* =========================================================
+   READ FOLDER RECURSIVELY
+   ========================================================= */
+
+
+async function readFolder(
+    folderPath
+) {
+
+
+    const folderURL =
+        "https://api.github.com/repos/" +
+        OWNER +
+        "/" +
+        REPOSITORY +
+        "/contents/" +
+        encodePath(
+            folderPath
+        ) +
+        "?ref=" +
+        BRANCH;
+
+
+    const response =
+        await fetch(
+            folderURL,
+            {
+                headers: {
+                    "Accept":
+                        "application/vnd.github+json"
+                }
+            }
+        );
+
+
+    if (
+        !response.ok
+    ) {
+
+        return;
+
+    }
+
+
+    const items =
+        await response.json();
+
+
+    for (
+        const item of items
+    ) {
+
+
+        /*
+        File
+        */
+
+        if (
+            item.type ===
+            "file"
+        ) {
+
+            addSupportedFile(
+                item
+            );
+
+        }
+
+
+        /*
+        Folder
+        */
+
+        else if (
+            item.type ===
+            "dir"
+        ) {
+
+            await readFolder(
+                item.path
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD SUPPORTED FILE
+   ========================================================= */
+
+
+function addSupportedFile(
+    item
+) {
+
+
+    const filename =
+        item.name;
+
+
+    const dot =
+        filename.lastIndexOf(".");
+
+
+    if (
+        dot === -1
+    ) {
+
+        return;
+
+    }
+
+
+    const extension =
+        filename
+        .substring(
+            dot + 1
+        )
+        .toLowerCase();
+
+
+    /*
+    Only PDF / DOC / DOCX
+    */
+
+    if (
+        !SUPPORTED_EXTENSIONS
+            .includes(
+                extension
+            )
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+    Avoid duplicate files
+    */
+
+    const alreadyExists =
+        availableFiles.some(
+            function(file) {
+
+                return (
+                    file.path ===
+                    item.path
+                );
+
+            }
+        );
+
+
+    if (
+        alreadyExists
+    ) {
+
+        return;
+
+    }
+
+
+    availableFiles.push({
+
+        /*
+        EXACT GitHub filename
+        */
+
+        name:
+            item.name,
+
+        /*
+        Full repository path
+        */
+
+        path:
+            item.path,
+
+        /*
+        Direct GitHub download URL
+        */
+
+        download_url:
+            item.download_url,
+
+        /*
+        Extension
+        */
+
+        extension:
+            extension
+
+    });
+
+}
+
+
+/* =========================================================
+   ENCODE FOLDER PATH
+   ========================================================= */
+
+
+function encodePath(
+    path
+) {
+
+
+    return path
+        .split("/")
+        .map(
+            function(part) {
+
+                return encodeURIComponent(
+                    part
+                );
+
+            }
+        )
+        .join("/");
+
+}
+
+
+/* =========================================================
+   DISPLAY FILES
+   ========================================================= */
+
 
 function displayFiles() {
 
 
     const fileList =
-        document
-        .getElementById("fileList");
+        document.getElementById(
+            "fileList"
+        );
 
 
-    fileList.innerHTML = "";
+    fileList.innerHTML =
+        "";
 
 
-    let currentCategory = "";
+    /*
+    =====================================================
+    Display every file
+    =====================================================
+    */
 
-
-    files.forEach(
-        (file, index) => {
-
-
-            /*
-            Category
-            */
-
-            if (
-                file.category !==
-                currentCategory
-            ) {
-
-
-                currentCategory =
-                    file.category;
-
-
-                const category =
-                    document
-                    .createElement("div");
-
-
-                category.className =
-                    "category";
-
-
-                category.textContent =
-                    currentCategory;
-
-
-                fileList.appendChild(
-                    category
-                );
-
-            }
+    availableFiles.forEach(
+        function(file, index) {
 
 
             /*
@@ -756,8 +1480,9 @@ function displayFiles() {
             */
 
             const row =
-                document
-                .createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             row.className =
@@ -769,8 +1494,9 @@ function displayFiles() {
             */
 
             const checkbox =
-                document
-                .createElement("input");
+                document.createElement(
+                    "input"
+                );
 
 
             checkbox.type =
@@ -787,17 +1513,18 @@ function displayFiles() {
 
             checkbox.addEventListener(
                 "change",
-                updateCount
+                updateSelectedCount
             );
 
 
             /*
-            File name
+            EXACT filename
             */
 
             const name =
-                document
-                .createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             name.className =
@@ -806,6 +1533,25 @@ function displayFiles() {
 
             name.textContent =
                 file.name;
+
+
+            /*
+            File extension
+            */
+
+            const type =
+                document.createElement(
+                    "span"
+                );
+
+
+            type.className =
+                "file-type";
+
+
+            type.textContent =
+                file.extension
+                .toUpperCase();
 
 
             /*
@@ -822,6 +1568,11 @@ function displayFiles() {
             );
 
 
+            row.appendChild(
+                type
+            );
+
+
             fileList.appendChild(
                 row
             );
@@ -832,103 +1583,99 @@ function displayFiles() {
 }
 
 
-/*
-========================================================
-SELECT ALL
-========================================================
-*/
+/* =========================================================
+   SELECT ALL
+   ========================================================= */
 
-function selectAll() {
+
+function selectAllFiles() {
 
 
     document
-    .querySelectorAll(
-        ".file-checkbox"
-    )
-    .forEach(
-        checkbox => {
+        .querySelectorAll(
+            ".file-checkbox"
+        )
+        .forEach(
+            function(checkbox) {
 
-            checkbox.checked =
-            true;
+                checkbox.checked =
+                    true;
 
-        }
-    );
+            }
+        );
 
 
-    updateCount();
+    updateSelectedCount();
 
 }
 
 
-/*
-========================================================
-CLEAR ALL
-========================================================
-*/
+/* =========================================================
+   CLEAR ALL
+   ========================================================= */
 
-function clearAll() {
+
+function clearAllFiles() {
 
 
     document
-    .querySelectorAll(
-        ".file-checkbox"
-    )
-    .forEach(
-        checkbox => {
+        .querySelectorAll(
+            ".file-checkbox"
+        )
+        .forEach(
+            function(checkbox) {
 
-            checkbox.checked =
-            false;
+                checkbox.checked =
+                    false;
 
-        }
-    );
+            }
+        );
 
 
-    updateCount();
+    updateSelectedCount();
 
 }
 
 
-/*
-========================================================
-COUNT
-========================================================
-*/
+/* =========================================================
+   UPDATE COUNT
+   ========================================================= */
 
-function updateCount() {
+
+function updateSelectedCount() {
 
 
     const selected =
-        document
-        .querySelectorAll(
+        document.querySelectorAll(
             ".file-checkbox:checked"
         );
 
 
-    const count =
+    document
+        .getElementById(
+            "selectedCount"
+        )
+        .textContent =
+        "Selected Files: " +
         selected.length;
 
 
     document
-    .getElementById("selectedCount")
-    .textContent =
-    `Selected Files: ${count}`;
-
-
-    document
-    .getElementById("downloadButton")
-    .disabled =
-    count === 0;
+        .getElementById(
+            "downloadButton"
+        )
+        .disabled =
+        selected.length === 0;
 
 }
 
 
-/*
-========================================================
-DOWNLOAD SELECTED FILES
-========================================================
-*/
+/* =========================================================
+   DIRECT DOWNLOAD
+   ========================================================= */
 
-async function downloadFiles() {
+
+async function downloadSelectedFiles() {
 
 
     const selected =
@@ -953,201 +1700,155 @@ async function downloadFiles() {
 
 
     const button =
-        document
-        .getElementById(
+        document.getElementById(
             "downloadButton"
         );
 
 
     button.disabled =
-    true;
+        true;
 
 
-    try {
+    /*
+    =====================================================
+    Download each selected file directly
+    =====================================================
+    */
+
+    for (
+        let i = 0;
+        i < selected.length;
+        i++
+    ) {
 
 
-        const zip =
-            new JSZip();
+        const checkbox =
+            selected[i];
 
 
-        for (
-            let i = 0;
-            i < selected.length;
-            i++
-        ) {
-
-
-            const checkbox =
-                selected[i];
-
-
-            const index =
-                parseInt(
-                    checkbox.dataset.index
-                );
-
-
-            const file =
-                files[index];
-
-
-            /*
-            Raw GitHub URL
-            */
-
-            const url =
-            `https://raw.githubusercontent.com/` +
-            `${OWNER}/` +
-            `${REPOSITORY}/` +
-            `${BRANCH}/` +
-            `${file.file}`;
-
-
-            button.textContent =
-            `⏳ Downloading ${i + 1}/${selected.length}`;
-
-
-            /*
-            Fetch file
-            */
-
-            const response =
-                await fetch(url);
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    file.name
-                );
-
-            }
-
-
-            const blob =
-                await response.blob();
-
-
-            /*
-            Put inside ZIP
-            */
-
-            zip.file(
-                file.name,
-                blob
+        const index =
+            Number(
+                checkbox.dataset.index
             );
 
-        }
+
+        const file =
+            availableFiles[index];
 
 
         /*
-        Create ZIP
+        Progress
         */
 
         button.textContent =
-        "⏳ Creating ZIP...";
-
-
-        const zipBlob =
-            await zip.generateAsync(
-                {
-                    type: "blob",
-
-                    compression:
-                    "DEFLATE",
-
-                    compressionOptions:
-                    {
-                        level: 6
-                    }
-                }
-            );
+            "⬇️ Downloading " +
+            (i + 1) +
+            " / " +
+            selected.length;
 
 
         /*
-        Download ZIP
+        Direct GitHub URL
         */
 
-        const url =
-            URL.createObjectURL(
-                zipBlob
+        const link =
+            document.createElement(
+                "a"
             );
 
 
-        const link =
-            document
-            .createElement("a");
-
-
         link.href =
-        url;
+            file.download_url;
 
 
         link.download =
-        `${studentSRN}_OS_Materials.zip`;
+            file.name;
+
+
+        link.target =
+            "_blank";
+
+
+        link.rel =
+            "noopener";
 
 
         document
-        .body
-        .appendChild(link);
+            .body
+            .appendChild(
+                link
+            );
 
 
         link.click();
 
 
         document
-        .body
-        .removeChild(link);
+            .body
+            .removeChild(
+                link
+            );
 
 
-        URL.revokeObjectURL(
-            url
-        );
+        /*
+        Delay between downloads
+        */
 
-
-        button.textContent =
-        "📦 DOWNLOAD SELECTED FILES";
-
-
-        button.disabled =
-        false;
-
-
-        showStatus(
-            "ZIP downloaded successfully.",
-            "success"
+        await delay(
+            1000
         );
 
     }
 
 
-    catch(error) {
+    /*
+    Reset
+    */
 
-        console.error(error);
-
-
-        alert(
-            "Unable to download one of the selected files."
-        );
+    button.textContent =
+        "📥 DOWNLOAD SELECTED FILES";
 
 
-        button.textContent =
-        "📦 DOWNLOAD SELECTED FILES";
-
-
-        button.disabled =
+    button.disabled =
         false;
 
-    }
+
+    showStatus(
+        "Selected files downloaded.",
+        "success"
+    );
 
 }
 
 
-/*
-========================================================
-STATUS
-========================================================
-*/
+/* =========================================================
+   DELAY
+   ========================================================= */
+
+
+function delay(
+    milliseconds
+) {
+
+
+    return new Promise(
+        function(resolve) {
+
+            setTimeout(
+                resolve,
+                milliseconds
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
 
 function showStatus(
     message,
@@ -1156,50 +1857,53 @@ function showStatus(
 
 
     const status =
-        document
-        .getElementById("status");
+        document.getElementById(
+            "status"
+        );
 
 
     status.textContent =
-    message;
+        message;
 
 
     status.className =
-    `status ${type}`;
+        "status " +
+        type;
 
 
     status.style.display =
-    "block";
+        "block";
 
 }
 
 
-/*
-========================================================
-ENTER KEY
-========================================================
-*/
+/* =========================================================
+   ENTER KEY
+   ========================================================= */
+
 
 document
-.getElementById("srn")
-.addEventListener(
-    "keypress",
-    function(event) {
+    .getElementById(
+        "srn"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
 
-        if (
-            event.key === "Enter"
-        ) {
+            if (
+                event.key === "Enter"
+            ) {
 
-            loadFiles();
+                loadFiles();
+
+            }
 
         }
-
-    }
-);
+    );
 
 </script>
+
 
 </body>
 
 </html>
-
