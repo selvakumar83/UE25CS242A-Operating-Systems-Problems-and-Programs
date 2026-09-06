@@ -1,1560 +1,792 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color"
-      content="#075985">
-
-<title>
-Operating Systems - Problems & Programs
-</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="Operating Systems - Problems & Programs">
+<title>Operating Systems | Problems & Programs</title>
 
 <style>
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
+:root{
+    --bg:#050a14;
+    --panel:rgba(12,22,39,.72);
+    --line:rgba(255,255,255,.14);
+    --text:#f8fbff;
+    --muted:#9eacc0;
+    --cyan:#22d3ee;
+    --blue:#3b82f6;
+    --violet:#8b5cf6;
+    --green:#34d399;
+    --shadow:0 30px 80px rgba(0,0,0,.45);
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+*{box-sizing:border-box}
+
+html,body{
+    width:100%;
+    min-height:100%;
+    margin:0;
 }
 
-body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    font-family:"Segoe UI",Inter,Arial,sans-serif;
+    color:var(--text);
     background:
-        #f1f5f9;
-
-    color:
-        #1e293b;
-
+        radial-gradient(circle at 15% 15%,rgba(34,211,238,.12),transparent 28%),
+        radial-gradient(circle at 85% 80%,rgba(139,92,246,.14),transparent 30%),
+        linear-gradient(135deg,#030711,#07111f 52%,#090d1b);
 }
 
+/* ---------- Ambient animated background ---------- */
 
-/* =========================================================
-   PAGE ANIMATIONS
-   ========================================================= */
-
-@keyframes fadeDown {
-
-    from {
-        opacity: 0;
-        transform: translateY(-25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+.ambient{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
 }
 
-
-@keyframes fadeUp {
-
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(55px);
+    opacity:.24;
+    animation:drift 12s ease-in-out infinite alternate;
 }
 
-
-@keyframes scaleIn {
-
-    from {
-        opacity: 0;
-        transform: scale(0.96);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-
+.orb.one{
+    width:260px;height:260px;
+    background:#06b6d4;
+    left:-100px;top:-90px;
+}
+.orb.two{
+    width:300px;height:300px;
+    background:#7c3aed;
+    right:-120px;bottom:-120px;
+    animation-delay:-4s;
+}
+.orb.three{
+    width:170px;height:170px;
+    background:#2563eb;
+    left:48%;top:10%;
+    animation-duration:16s;
+    animation-delay:-7s;
 }
 
-
-@keyframes pop {
-
-    0% {
-        transform: scale(0.85);
-    }
-
-    70% {
-        transform: scale(1.08);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-
+@keyframes drift{
+    from{transform:translate3d(0,0,0) scale(1)}
+    to{transform:translate3d(45px,30px,0) scale(1.18)}
 }
 
+/* ---------- Fine grid ---------- */
 
-@keyframes pulse {
-
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.025);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-
+.grid{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:42px 42px;
+    mask-image:linear-gradient(to bottom,black,transparent 90%);
 }
 
+/* ---------- Main ---------- */
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+.page{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+}
 
-.header {
+.app{
+    width:min(1040px,100%);
+    min-height:580px;
+    max-height:calc(100vh - 36px);
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:30px;
+    background:var(--panel);
+    backdrop-filter:blur(24px) saturate(135%);
+    -webkit-backdrop-filter:blur(24px) saturate(135%);
+    box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.09);
+    animation:appIn .8s cubic-bezier(.2,.8,.2,1) both;
+}
 
+@keyframes appIn{
+    from{opacity:0;transform:translateY(22px) scale(.975)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* ---------- Left presentation panel ---------- */
+
+.presentation{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:48px;
+    border-right:1px solid rgba(255,255,255,.09);
+    overflow:hidden;
+}
+
+.presentation:after{
+    content:"";
+    position:absolute;
+    width:360px;height:360px;
+    right:-180px;top:50%;
+    transform:translateY(-50%);
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(34,211,238,.13),transparent 68%);
+}
+
+.badge{
+    width:max-content;
+    padding:8px 13px;
+    border:1px solid rgba(34,211,238,.23);
+    border-radius:999px;
+    background:rgba(34,211,238,.07);
+    color:#9cecf7;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    animation:fadeUp .7s .12s both;
+}
+
+.presentation h1{
+    margin:20px 0 10px;
+    max-width:540px;
+    font-size:clamp(40px,5vw,66px);
+    line-height:.98;
+    letter-spacing:-2.8px;
+    font-weight:800;
+    animation:fadeUp .7s .2s both;
+}
+
+.gradient-text{
+    background:linear-gradient(100deg,#fff 12%,#8be9f5 48%,#b8a4ff 85%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.subtitle{
+    margin:0;
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.55;
+    animation:fadeUp .7s .28s both;
+}
+
+.topic-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+    margin-top:27px;
+    animation:fadeUp .7s .36s both;
+}
+
+.topic{
+    padding:8px 11px;
+    border-radius:11px;
+    border:1px solid rgba(255,255,255,.09);
+    background:rgba(255,255,255,.045);
+    color:#cbd5e1;
+    font-size:12px;
+}
+
+.visual{
+    position:relative;
+    width:145px;
+    height:145px;
+    margin-top:30px;
+    display:grid;
+    place-items:center;
+    border-radius:38px;
+    border:1px solid rgba(255,255,255,.13);
     background:
-        linear-gradient(
-            135deg,
-            #075985,
-            #0369a1
-        );
-
-    color:
-        white;
-
-    text-align:
-        center;
-
-    padding:
-        26px 15px 29px;
-
-    border-radius:
-        0 0 25px 25px;
-
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.15);
-
-    animation:
-        fadeDown
-        0.7s
-        ease-out;
-
+        linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025));
+    box-shadow:0 20px 45px rgba(0,0,0,.22);
+    animation:float 4.5s ease-in-out infinite,fadeUp .8s .42s both;
 }
 
-
-.header h1 {
-
-    margin:
-        0;
-
-    font-size:
-        28px;
-
-    font-weight:
-        700;
-
+.visual:before{
+    content:"";
+    position:absolute;
+    inset:-10px;
+    border-radius:45px;
+    border:1px solid rgba(34,211,238,.12);
+    animation:spin 12s linear infinite;
 }
 
-
-.header p {
-
-    margin:
-        8px 0 0;
-
-    font-size:
-        16px;
-
+.visual-icon{
+    font-size:66px;
+    filter:drop-shadow(0 10px 20px rgba(34,211,238,.18));
 }
 
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(-1deg)}
+    50%{transform:translateY(-10px) rotate(1deg)}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
+/* ---------- Right authentication panel ---------- */
 
-.container {
-
-    width:
-        100%;
-
-    max-width:
-        720px;
-
-    margin:
-        auto;
-
-    padding:
-        12px;
-
+.access{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:42px;
 }
 
-
-/* =========================================================
-   CARD
-   ========================================================= */
-
-.card {
-
-    background:
-        white;
-
-    margin-top:
-        18px;
-
-    padding:
-        20px;
-
-    border-radius:
-        18px;
-
-    box-shadow:
-        0 3px 15px
-        rgba(0,0,0,0.08);
-
-    animation:
-        fadeUp
-        0.7s
-        ease-out;
-
+.auth{
+    width:min(390px,100%);
 }
 
-
-/* =========================================================
-   PASSWORD LABEL
-   ========================================================= */
-
-.label {
-
-    display:
-        block;
-
-    margin-bottom:
-        9px;
-
-    font-size:
-        18px;
-
-    font-weight:
-        bold;
-
+.auth-head{
+    margin-bottom:25px;
 }
 
-
-/* =========================================================
-   PASSWORD INPUT
-   ========================================================= */
-
-#password {
-
-    width:
-        100%;
-
-    height:
-        56px;
-
-    padding:
-        10px 15px;
-
-    border:
-        1px solid #cbd5e1;
-
-    border-radius:
-        12px;
-
-    font-size:
-        18px;
-
-    outline:
-        none;
-
-    transition:
-        border 0.2s ease,
-        box-shadow 0.2s ease;
-
+.auth-head .mini{
+    color:#7dd3fc;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
 }
 
-
-#password:focus {
-
-    border:
-        2px solid #0284c7;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(2,132,199,0.12);
-
+.auth-head h2{
+    margin:8px 0 7px;
+    font-size:29px;
+    letter-spacing:-.7px;
 }
 
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-
-button {
-
-    width:
-        100%;
-
-    min-height:
-        52px;
-
-    margin-top:
-        12px;
-
-    padding:
-        12px;
-
-    border:
-        none;
-
-    border-radius:
-        12px;
-
-    font-size:
-        16px;
-
-    font-weight:
-        bold;
-
-    cursor:
-        pointer;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
-
+.auth-head p{
+    margin:0;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.55;
 }
 
-
-button:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 5px 12px
-        rgba(0,0,0,0.12);
-
+.field-label{
+    display:block;
+    margin-bottom:9px;
+    color:#dbe7f5;
+    font-size:13px;
+    font-weight:650;
 }
 
-
-button:active {
-
-    transform:
-        scale(0.97);
-
+.field{
+    position:relative;
 }
 
-
-button:disabled {
-
-    background:
-        #94a3b8 !important;
-
-    cursor:
-        not-allowed;
-
-    transform:
-        none;
-
-    box-shadow:
-        none;
-
+.field input{
+    width:100%;
+    height:58px;
+    padding:0 48px 0 17px;
+    border:1px solid rgba(255,255,255,.13);
+    border-radius:15px;
+    outline:none;
+    background:rgba(0,0,0,.20);
+    color:#fff;
+    font-size:16px;
+    transition:.25s ease;
 }
 
+.field input::placeholder{color:#6f7d91}
 
-/* =========================================================
-   SUBMIT
-   ========================================================= */
-
-.submit-button {
-
-    background:
-        #0369a1;
-
-    color:
-        white;
-
+.field input:focus{
+    border-color:rgba(34,211,238,.62);
+    box-shadow:0 0 0 4px rgba(34,211,238,.08),0 12px 30px rgba(0,0,0,.15);
+    background:rgba(0,0,0,.28);
 }
 
+.eye{
+    position:absolute;
+    right:7px;
+    top:7px;
+    width:44px;
+    height:44px;
+    margin:0;
+    padding:0;
+    border:0;
+    border-radius:12px;
+    background:transparent;
+    color:#8b9ab0;
+    cursor:pointer;
+    font-size:18px;
+    transition:.2s;
+}
+.eye:hover{background:rgba(255,255,255,.06);color:#fff}
 
-/* =========================================================
-   SELECT BUTTONS
-   ========================================================= */
+/* ---------- Modern buttons ---------- */
 
-.select-button {
-
-    background:
-        #e2e8f0;
-
-    color:
-        #0f172a;
-
+.btn{
+    position:relative;
+    width:100%;
+    height:58px;
+    margin-top:16px;
+    border:0;
+    border-radius:15px;
+    overflow:hidden;
+    color:#fff;
+    font:700 15px "Segoe UI",Arial,sans-serif;
+    letter-spacing:.7px;
+    cursor:pointer;
+    isolation:isolate;
+    transition:transform .25s ease,box-shadow .25s ease,filter .25s ease;
 }
 
-
-/* =========================================================
-   DOWNLOAD
-   ========================================================= */
-
-.download-button {
-
-    background:
-        #15803d;
-
-    color:
-        white;
-
+.btn:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.24) 50%,transparent 75%);
+    transform:translateX(-130%);
+    transition:transform .7s ease;
+    z-index:-1;
 }
 
+.btn:hover:before{transform:translateX(130%)}
 
-/* =========================================================
-   DOWNLOAD BUTTON ANIMATION
-   ========================================================= */
-
-.download-button:not(:disabled) {
-
-    animation:
-        pulse
-        2s
-        ease-in-out
-        infinite;
-
+.btn:hover{
+    transform:translateY(-3px);
+    filter:brightness(1.08);
 }
 
+.btn:active{transform:translateY(1px) scale(.99)}
 
-/* =========================================================
-   WELCOME
-   ========================================================= */
-
-.welcome {
-
-    background:
-        #e0f2fe;
-
-    color:
-        #075985;
-
-    padding:
-        14px;
-
-    border-radius:
-        12px;
-
-    text-align:
-        center;
-
-    font-size:
-        16px;
-
-    font-weight:
-        bold;
-
-    margin-bottom:
-        18px;
-
-    animation:
-        scaleIn
-        0.5s
-        ease-out;
-
+.primary{
+    background:linear-gradient(100deg,#0891b2,#2563eb 52%,#7c3aed);
+    box-shadow:0 13px 30px rgba(37,99,235,.25);
 }
 
-
-/* =========================================================
-   FILE INFORMATION
-   ========================================================= */
-
-.file-info {
-
-    text-align:
-        center;
-
-    color:
-        #64748b;
-
-    font-size:
-        14px;
-
-    margin:
-        10px 0 18px;
-
+.drive{
+    background:linear-gradient(100deg,#059669,#0891b2 55%,#2563eb);
+    box-shadow:0 13px 30px rgba(13,148,136,.22);
 }
 
-
-/* =========================================================
-   FILE LIST
-
-   ONLY THIS AREA SCROLLS
-   ========================================================= */
-
-.file-list {
-
-    width:
-        100%;
-
-    height:
-        390px;
-
-    max-height:
-        390px;
-
-    overflow-y:
-        auto;
-
-    overflow-x:
-        hidden;
-
-    border:
-        1px solid #e2e8f0;
-
-    border-radius:
-        12px;
-
-    padding:
-        0 10px;
-
-    background:
-        #ffffff;
-
-    scroll-behavior:
-        smooth;
-
-    -webkit-overflow-scrolling:
-        touch;
-
+.btn:disabled{
+    opacity:.65;
+    cursor:wait;
+    transform:none;
 }
 
-
-/* =========================================================
-   FILE LIST SCROLLBAR
-   ========================================================= */
-
-.file-list::-webkit-scrollbar {
-
-    width:
-        8px;
-
+.status{
+    min-height:22px;
+    margin-top:12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
 }
 
+.status.error{color:#fca5a5}
+.status.success{color:#86efac}
 
-.file-list::-webkit-scrollbar-track {
+/* ---------- Success state ---------- */
 
-    background:
-        #f1f5f9;
-
-    border-radius:
-        10px;
-
+.success-state{
+    display:none;
+    text-align:center;
+    animation:successIn .65s cubic-bezier(.2,.8,.2,1) both;
 }
 
-
-.file-list::-webkit-scrollbar-thumb {
-
-    background:
-        #94a3b8;
-
-    border-radius:
-        10px;
-
+@keyframes successIn{
+    from{opacity:0;transform:scale(.94) translateY(12px)}
+    to{opacity:1;transform:scale(1) translateY(0)}
 }
 
-
-.file-list::-webkit-scrollbar-thumb:hover {
-
-    background:
-        #64748b;
-
+.check{
+    width:76px;
+    height:76px;
+    margin:0 auto 18px;
+    display:grid;
+    place-items:center;
+    border-radius:24px;
+    background:rgba(52,211,153,.10);
+    border:1px solid rgba(52,211,153,.25);
+    color:#6ee7b7;
+    font-size:37px;
+    box-shadow:0 15px 40px rgba(16,185,129,.13);
+    animation:checkPop .65s cubic-bezier(.2,1.4,.4,1) both;
 }
 
-
-/* =========================================================
-   FILE ITEM
-   ========================================================= */
-
-.file-item {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    width:
-        100%;
-
-    min-height:
-        60px;
-
-    padding:
-        10px 4px;
-
-    border-bottom:
-        1px solid #e5e7eb;
-
-    animation:
-        scaleIn
-        0.35s
-        ease-out
-        both;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-
+@keyframes checkPop{
+    from{transform:scale(.4) rotate(-15deg);opacity:0}
+    to{transform:scale(1) rotate(0);opacity:1}
 }
 
-
-.file-item:last-child {
-
-    border-bottom:
-        none;
-
+.success-state h2{
+    margin:0;
+    font-size:27px;
 }
 
-
-.file-item:hover {
-
-    background:
-        #f8fafc;
-
+.success-state p{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
 }
 
+/* ---------- Footer ---------- */
 
-/* =========================================================
-   CHECKBOX
-   ========================================================= */
-
-.file-checkbox {
-
-    appearance:
-        none;
-
-    -webkit-appearance:
-        none;
-
-    width:
-        24px !important;
-
-    height:
-        24px;
-
-    min-width:
-        24px;
-
-    margin:
-        0 13px 0 0;
-
-    border:
-        2px solid #64748b;
-
-    border-radius:
-        6px;
-
-    background:
-        white;
-
-    cursor:
-        pointer;
-
-    position:
-        relative;
-
-    flex-shrink:
-        0;
-
+.footer{
+    position:absolute;
+    left:48px;
+    bottom:25px;
+    color:#637187;
+    font-size:11px;
 }
 
-
-.file-checkbox:checked {
-
-    background:
-        #0284c7;
-
-    border-color:
-        #0284c7;
-
-    animation:
-        pop
-        0.2s
-        ease-out;
-
-}
-
-
-.file-checkbox:checked::after {
-
-    content:
-        "✓";
-
-    color:
-        white;
-
-    position:
-        absolute;
-
-    font-size:
-        17px;
-
-    font-weight:
-        bold;
-
-    left:
-        3px;
-
-    top:
-        -1px;
-
-}
-
-
-/* =========================================================
-   FILE NAME
-   ========================================================= */
-
-.file-name {
-
-    flex:
-        1;
-
-    min-width:
-        0;
-
-    font-size:
-        15px;
-
-    line-height:
-        1.4;
-
-    word-break:
-        break-word;
-
-    color:
-        #1e293b;
-
-}
-
-
-/* =========================================================
-   FILE TYPE
-   ========================================================= */
-
-.file-type {
-
-    margin-left:
-        8px;
-
-    padding:
-        4px 7px;
-
-    border-radius:
-        6px;
-
-    background:
-        #e0f2fe;
-
-    color:
-        #075985;
-
-    font-size:
-        10px;
-
-    font-weight:
-        bold;
-
-    flex-shrink:
-        0;
-
-}
-
-
-/* =========================================================
-   SELECTED COUNT
-   ========================================================= */
-
-.selected-count {
-
-    margin:
-        17px 0;
-
-    text-align:
-        center;
-
-    font-size:
-        17px;
-
-    font-weight:
-        bold;
-
-    color:
-        #075985;
-
-    transition:
-        transform 0.2s ease;
-
-}
-
-
-/* =========================================================
-   SCROLL TO TOP BUTTON
-
-   This button is INSIDE the file area.
-   ========================================================= */
-
-.file-scroll-container {
-
-    position:
-        relative;
-
-}
-
-
-.scroll-top-button {
-
-    display:
-        none;
-
-    position:
-        absolute;
-
-    right:
-        18px;
-
-    bottom:
-        15px;
-
-    width:
-        44px;
-
-    min-width:
-        44px;
-
-    height:
-        44px;
-
-    min-height:
-        44px;
-
-    margin:
-        0;
-
-    padding:
-        0;
-
-    border-radius:
-        50%;
-
-    background:
-        #0369a1;
-
-    color:
-        white;
-
-    font-size:
-        20px;
-
-    z-index:
-        10;
-
-    box-shadow:
-        0 4px 12px
-        rgba(0,0,0,0.25);
-
-}
-
-
-.scroll-top-button.show {
-
-    display:
-        block;
-
-    animation:
-        pop
-        0.25s
-        ease-out;
-
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-.status {
-
-    display:
-        none;
-
-    margin-top:
-        13px;
-
-    padding:
-        13px;
-
-    border-radius:
-        10px;
-
-    text-align:
-        center;
-
-    font-size:
-        14px;
-
-    line-height:
-        1.4;
-
-    animation:
-        fadeUp
-        0.35s
-        ease-out;
-
-}
-
-
-.status.info {
-
-    display:
-        block;
-
-    background:
-        #e0f2fe;
-
-    color:
-        #075985;
-
-}
-
-
-.status.success {
-
-    display:
-        block;
-
-    background:
-        #dcfce7;
-
-    color:
-        #166534;
-
-}
-
-
-.status.error {
-
-    display:
-        block;
-
-    background:
-        #fee2e2;
-
-    color:
-        #991b1b;
-
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.footer {
-
-    text-align:
-        center;
-
-    padding:
-        30px 10px;
-
-    color:
-        #64748b;
-
-    font-size:
-        13px;
-
-    line-height:
-        1.7;
-
-    animation:
-        fadeUp
-        0.8s
-        ease-out;
-
-}
-
-
-.copyright {
-
-    margin-top:
-        10px;
-
-    font-size:
-        12px;
-
-    color:
-        #475569;
-
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-
-    .header {
-
-        padding:
-            22px 12px 25px;
-
+.footer strong{color:#91a0b5}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width:900px){
+    .app{
+        grid-template-columns:1fr;
+        max-height:none;
+        min-height:0;
     }
 
-
-    .header h1 {
-
-        font-size:
-            23px;
-
+    .presentation{
+        padding:35px 35px 28px;
+        border-right:0;
+        border-bottom:1px solid rgba(255,255,255,.08);
     }
 
-
-    .header p {
-
-        font-size:
-            14px;
-
+    .presentation h1{
+        font-size:48px;
     }
 
-
-    .container {
-
-        padding:
-            9px;
-
+    .visual{
+        position:absolute;
+        right:38px;
+        top:50%;
+        transform:translateY(-50%);
+        width:105px;
+        height:105px;
+        margin:0;
     }
 
-
-    .card {
-
-        padding:
-            16px;
-
-    }
-
-
-    #password {
-
-        font-size:
-            17px;
-
-    }
-
-
-    /* ---------------------------------------------
-       FILE AREA ONLY SCROLLS
-       --------------------------------------------- */
-
-    .file-list {
-
-        height:
-            340px;
-
-        max-height:
-            340px;
-
-    }
-
-
-    .file-item {
-
-        min-height:
-            58px;
-
-    }
-
-
-    .file-name {
-
-        font-size:
-            14px;
-
-    }
-
-
-    .file-type {
-
-        font-size:
-            9px;
-
-    }
-
-
-    button {
-
-        font-size:
-            15px;
-
-    }
-
-
-    .scroll-top-button {
-
-        right:
-            15px;
-
-        bottom:
-            15px;
-
-    }
-
+    .visual-icon{font-size:48px}
+    .footer{position:static;margin-top:24px}
+    .access{padding:35px}
 }
 
+@media (max-width:620px){
+    .page{padding:10px}
 
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-
-        animation-duration:
-            0.01ms !important;
-
-        animation-iteration-count:
-            1 !important;
-
-        transition-duration:
-            0.01ms !important;
-
-        scroll-behavior:
-            auto !important;
-
+    .app{
+        border-radius:23px;
     }
 
+    .presentation{
+        padding:29px 23px 25px;
+    }
+
+    .presentation h1{
+        margin-top:15px;
+        font-size:37px;
+        letter-spacing:-1.8px;
+        max-width:290px;
+    }
+
+    .subtitle{font-size:15px}
+
+    .visual{
+        width:78px;
+        height:78px;
+        right:22px;
+        border-radius:22px;
+    }
+
+    .visual-icon{font-size:36px}
+
+    .topic-row{margin-top:19px}
+
+    .access{
+        padding:27px 21px 30px;
+    }
+
+    .auth-head h2{font-size:25px}
+    .btn{height:58px}
 }
 
+@media (max-height:700px) and (min-width:901px){
+    .app{min-height:520px}
+    .presentation{padding:32px 42px}
+    .presentation h1{font-size:52px}
+    .visual{width:112px;height:112px;margin-top:20px}
+    .visual-icon{font-size:52px}
+    .access{padding:30px}
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion:reduce){
+    *,*:before,*:after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     HEADER
-     ===================================================== -->
-
-<div class="header">
-
-    <h1>
-        💻 Operating Systems
-    </h1>
-
-    <p>
-        Problems & Programs
-    </p>
-
+<div class="ambient">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
 </div>
 
+<div class="grid"></div>
+
+<div class="page">
+
+    <main class="app">
+
+        <!-- PRESENTATION PANEL -->
+        <section class="presentation">
+
+            <div class="badge">PES University • EC Campus</div>
+
+            <h1>
+                <span class="gradient-text">Operating</span><br>
+                Systems
+            </h1>
+
+            <p class="subtitle">
+                Problems &amp; Programs
+                <br>
+                A dedicated course resource portal for
+                CSE (AI &amp; ML) students.
+            </p>
+
+            <div class="topic-row">
+                <span class="topic">Processes</span>
+                <span class="topic">Memory</span>
+                <span class="topic">Scheduling</span>
+                <span class="topic">System Calls</span>
+            </div>
+
+            <div class="visual" aria-hidden="true">
+                <div class="visual-icon">💻</div>
+            </div>
+
+            <div class="footer">
+                <strong>3 Sem CSE (AI &amp; ML)</strong>
+                &nbsp;•&nbsp; Operating Systems
+            </div>
+
+        </section>
 
 
-<div class="container">
+        <!-- ACCESS PANEL -->
+        <section class="access">
+
+            <div class="auth">
+
+                <!-- LOGIN -->
+                <div id="loginState">
+
+                    <div class="auth-head">
+                        <div class="mini">Secure Access</div>
+
+                        <h2>Course Resources</h2>
+
+                        <p>
+                            Enter the course password to access
+                            the Problems &amp; Programs repository.
+                        </p>
+                    </div>
+
+                    <label class="field-label" for="password">
+                        Password
+                    </label>
+
+                    <div class="field">
+
+                        <input
+                            id="password"
+                            type="password"
+                            placeholder="Enter course password"
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
+
+                        <button
+                            class="eye"
+                            id="eyeButton"
+                            type="button"
+                            aria-label="Show password"
+                        >👁</button>
+
+                    </div>
+
+                    <button
+                        id="submitButton"
+                        class="btn primary"
+                        type="button"
+                    >
+                        🔐 &nbsp; VERIFY &amp; CONTINUE
+                    </button>
+
+                    <div
+                        id="status"
+                        class="status"
+                        aria-live="polite"
+                    ></div>
+
+                </div>
 
 
-<!-- =====================================================
-     PASSWORD CARD
-     ===================================================== -->
+                <!-- SUCCESS -->
+                <div id="successState" class="success-state">
 
-<div
-    id="loginCard"
-    class="card"
->
+                    <div class="check">✓</div>
 
+                    <h2>Access Granted</h2>
 
-    <label
-        class="label"
-        for="password">
+                    <p>
+                        Your course resources are ready.
+                        Open the secure Google Drive repository.
+                    </p>
 
-        🔐 Enter Password
+                    <button
+                        id="driveButton"
+                        class="btn drive"
+                        type="button"
+                    >
+                        📥 &nbsp; OPEN COURSE FILES
+                    </button>
 
-    </label>
+                </div>
 
+            </div>
 
-    <input
-        id="password"
-        type="password"
-        placeholder="Enter Password"
-        autocomplete="off"
-    >
+        </section>
 
-
-    <button
-        id="submitButton"
-        class="submit-button"
-        type="button">
-
-        🔐 SUBMIT
-
-    </button>
-
-
-    <div
-        id="status"
-        class="status">
-
-    </div>
-
+    </main>
 
 </div>
-
-
-
-<!-- =====================================================
-     FILE CARD
-     ===================================================== -->
-
-<div
-    id="fileCard"
-    class="card"
-    style="display:none;"
->
-
-
-    <div
-        class="welcome">
-
-        ✅ Access Granted
-
-    </div>
-
-
-    <h2>
-        📂 Available Files
-    </h2>
-
-
-    <div
-        id="fileInfo"
-        class="file-info">
-
-    </div>
-
-
-    <!-- SELECT ALL -->
-
-    <button
-        id="selectAllButton"
-        class="select-button"
-        type="button">
-
-        ☑️ SELECT ALL
-
-    </button>
-
-
-    <!-- CLEAR ALL -->
-
-    <button
-        id="clearAllButton"
-        class="select-button"
-        type="button">
-
-        ⬜ CLEAR ALL
-
-    </button>
-
-
-    <!-- SELECTED COUNT -->
-
-    <div
-        id="selectedCount"
-        class="selected-count">
-
-        Selected Files: 0
-
-    </div>
-
-
-    <!-- =================================================
-         FILE SCROLL AREA
-         ================================================= -->
-
-    <div
-        class="file-scroll-container"
-    >
-
-
-        <div
-            id="fileList"
-            class="file-list"
-        >
-
-        </div>
-
-
-        <!-- SCROLL TO TOP -->
-
-        <button
-            id="scrollTopButton"
-            class="scroll-top-button"
-            type="button"
-            aria-label="Scroll files to top">
-
-            ↑
-
-        </button>
-
-
-    </div>
-
-
-    <!-- DOWNLOAD -->
-
-    <button
-        id="downloadButton"
-        class="download-button"
-        type="button"
-        disabled>
-
-        📥 DOWNLOAD SELECTED FILES
-
-    </button>
-
-
-</div>
-
-
-
-<!-- =====================================================
-     FOOTER
-     ===================================================== -->
-
-<div class="footer">
-
-    <strong>
-        3 Sem CSE (AI & ML)
-    </strong>
-
-    <br>
-
-    Operating Systems
-
-    <br>
-
-    PES University EC Campus
-
-
-    <div class="copyright">
-
-        © 2026 SelvaKumar R. All Rights Reserved.
-
-        <br>
-
-        For Educational Use Only.
-
-    </div>
-
-</div>
-
-
-</div>
-
 
 
 <script>
+"use strict";
 
-/* =========================================================
-   GITHUB CONFIGURATION
-   ========================================================= */
+/* ==============================
+   CONFIGURATION
+   ============================== */
 
-const OWNER =
-    "selvakumar83";
+const COURSE_PASSWORD = "PES EC";
 
-
-const REPOSITORY =
-    "UE25CS242A-Operating-Systems-Problems-and-Programs";
-
-
-const BRANCH =
-    "main";
+const GOOGLE_DRIVE_FOLDER =
+"https://drive.google.com/drive/folders/1gKDBmWhQJhsShPJ1K9mPneCDcd4TTYP0?usp=drive_link";
 
 
-/* =========================================================
-   PASSWORD
-   ========================================================= */
-
-const COMMON_PASSWORD =
-    "PES EC";
-
-
-/* =========================================================
-   VARIABLES
-   ========================================================= */
-
-let availableFiles = [];
-
-
-/* =========================================================
-   GET ELEMENTS
-   ========================================================= */
+/* ==============================
+   ELEMENTS
+   ============================== */
 
 const passwordInput =
-    document.getElementById(
-        "password"
-    );
-
+document.getElementById("password");
 
 const submitButton =
-    document.getElementById(
-        "submitButton"
+document.getElementById("submitButton");
+
+const driveButton =
+document.getElementById("driveButton");
+
+const eyeButton =
+document.getElementById("eyeButton");
+
+const status =
+document.getElementById("status");
+
+const loginState =
+document.getElementById("loginState");
+
+const successState =
+document.getElementById("successState");
+
+
+/* ==============================
+   SHOW / HIDE PASSWORD
+   ============================== */
+
+eyeButton.addEventListener("click", () => {
+
+    const hidden =
+        passwordInput.type === "password";
+
+    passwordInput.type =
+        hidden ? "text" : "password";
+
+    eyeButton.textContent =
+        hidden ? "🙈" : "👁";
+
+    eyeButton.setAttribute(
+        "aria-label",
+        hidden ? "Hide password" : "Show password"
     );
 
-
-const loginCard =
-    document.getElementById(
-        "loginCard"
-    );
+    passwordInput.focus();
+});
 
 
-const fileCard =
-    document.getElementById(
-        "fileCard"
-    );
+/* ==============================
+   STATUS
+   ============================== */
+
+function setStatus(message, type){
+
+    status.textContent = message;
+
+    status.className =
+        "status " + type;
+}
 
 
-const fileList =
-    document.getElementById(
-        "fileList"
-    );
+/* ==============================
+   LOGIN
+   ============================== */
 
+function verifyAccess(){
 
-const downloadButton =
-    document.getElementById(
-        "downloadButton"
-    );
+    const entered =
+        passwordInput.value.trim();
 
+    if(!entered){
 
-const selectAllButton =
-    document.getElementById(
-        "selectAllButton"
-    );
-
-
-const clearAllButton =
-    document.getElementById(
-        "clearAllButton"
-    );
-
-
-const scrollTopButton =
-    document.getElementById(
-        "scrollTopButton"
-    );
-
-
-/* =========================================================
-   SUBMIT BUTTON
-   ========================================================= */
-
-submitButton.addEventListener(
-    "click",
-    verifyPassword
-);
-
-
-/* =========================================================
-   ENTER KEY
-   ========================================================= */
-
-passwordInput.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key === "Enter"
-        ) {
-
-            verifyPassword();
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   VERIFY PASSWORD
-   ========================================================= */
-
-async function verifyPassword() {
-
-
-    const password =
-        passwordInput.value;
-
-
-    /* -----------------------------------------------------
-       EMPTY PASSWORD
-       ----------------------------------------------------- */
-
-    if (
-        password.trim() === ""
-    ) {
-
-        showStatus(
-            "Please enter the password.",
+        setStatus(
+            "Please enter the course password.",
             "error"
         );
 
         passwordInput.focus();
 
         return;
-
     }
 
+    if(entered !== COURSE_PASSWORD){
 
-    /* -----------------------------------------------------
-       CHECK PASSWORD
-       ----------------------------------------------------- */
-
-    if (
-        password !== COMMON_PASSWORD
-    ) {
-
-        showStatus(
-            "❌ Incorrect password. Please try again.",
+        setStatus(
+            "Incorrect password. Please try again.",
             "error"
         );
 
@@ -1563,984 +795,80 @@ async function verifyPassword() {
         passwordInput.focus();
 
         return;
-
     }
 
-
-    /* -----------------------------------------------------
-       Correct password
-       ----------------------------------------------------- */
-
-    submitButton.disabled =
-        true;
+    submitButton.disabled = true;
 
     submitButton.textContent =
-        "⏳ LOADING...";
+        "✓  VERIFIED";
 
-
-    showStatus(
-        "Password verified. Loading files...",
-        "info"
-    );
-
-
-    await loadFiles();
-
-}
-
-
-/* =========================================================
-   LOAD ALL FILES FROM GITHUB
-   ========================================================= */
-
-async function loadFiles() {
-
-
-    try {
-
-
-        /* =================================================
-           GITHUB TREE API
-
-           recursive=1 reads:
-
-           Root files
-           Folder files
-           Subfolder files
-           ================================================= */
-
-        const apiURL =
-            "https://api.github.com/repos/" +
-            OWNER +
-            "/" +
-            REPOSITORY +
-            "/git/trees/" +
-            BRANCH +
-            "?recursive=1";
-
-
-        const response =
-            await fetch(
-                apiURL,
-                {
-                    cache:
-                        "no-store",
-
-                    headers: {
-                        "Accept":
-                            "application/vnd.github+json"
-                    }
-                }
-            );
-
-
-        /* =================================================
-           ERROR
-           ================================================= */
-
-        if (
-            !response.ok
-        ) {
-
-
-            if (
-                response.status ===
-                404
-            ) {
-
-                throw new Error(
-                    "GitHub repository or branch was not found."
-                );
-
-            }
-
-
-            if (
-                response.status ===
-                403
-            ) {
-
-                throw new Error(
-                    "GitHub request limit reached. Please try again later."
-                );
-
-            }
-
-
-            throw new Error(
-                "GitHub error: " +
-                response.status
-            );
-
-        }
-
-
-        /* =================================================
-           READ DATA
-           ================================================= */
-
-        const data =
-            await response.json();
-
-
-        /* =================================================
-           CHECK TREE
-           ================================================= */
-
-        if (
-            !Array.isArray(
-                data.tree
-            )
-        ) {
-
-            throw new Error(
-                "Unable to read the GitHub file list."
-            );
-
-        }
-
-
-        /* =================================================
-           CHECK TRUNCATED
-           ================================================= */
-
-        if (
-            data.truncated === true
-        ) {
-
-            throw new Error(
-                "The repository contains too many files."
-            );
-
-        }
-
-
-        /* =================================================
-           CLEAR OLD FILES
-           ================================================= */
-
-        availableFiles = [];
-
-
-        /* =================================================
-           READ EVERY FILE
-           ================================================= */
-
-        data.tree.forEach(
-            function(item) {
-
-
-                /*
-                blob = file
-                tree = folder
-                */
-
-                if (
-                    item.type !==
-                    "blob"
-                ) {
-
-                    return;
-
-                }
-
-
-                if (
-                    !item.path
-                ) {
-
-                    return;
-
-                }
-
-
-                /* -----------------------------------------
-                   Complete repository path
-                   ----------------------------------------- */
-
-                const filePath =
-                    item.path;
-
-
-                /* -----------------------------------------
-                   Actual filename
-                   ----------------------------------------- */
-
-                const filename =
-                    filePath
-                    .split("/")
-                    .pop();
-
-
-                /* -----------------------------------------
-                   Do not show the webpage itself
-                   ----------------------------------------- */
-
-                if (
-                    filename
-                    .toLowerCase()
-                    ===
-                    "index.html"
-                ) {
-
-                    return;
-
-                }
-
-
-                /* -----------------------------------------
-                   Extension
-                   ----------------------------------------- */
-
-                let extension =
-                    "";
-
-
-                const dot =
-                    filename.lastIndexOf(".");
-
-
-                if (
-                    dot !== -1
-                ) {
-
-                    extension =
-                        filename
-                        .substring(
-                            dot + 1
-                        )
-                        .toUpperCase();
-
-                }
-
-
-                /* -----------------------------------------
-                   Encode path
-                   ----------------------------------------- */
-
-                const encodedPath =
-                    filePath
-                    .split("/")
-                    .map(
-                        function(part) {
-
-                            return encodeURIComponent(
-                                part
-                            );
-
-                        }
-                    )
-                    .join("/");
-
-
-                /* -----------------------------------------
-                   Direct raw GitHub URL
-                   ----------------------------------------- */
-
-                const downloadURL =
-                    "https://raw.githubusercontent.com/" +
-                    OWNER +
-                    "/" +
-                    REPOSITORY +
-                    "/" +
-                    BRANCH +
-                    "/" +
-                    encodedPath;
-
-
-                /* -----------------------------------------
-                   Store file
-                   ----------------------------------------- */
-
-                availableFiles.push({
-
-                    name:
-                        filename,
-
-                    path:
-                        filePath,
-
-                    extension:
-                        extension,
-
-                    downloadURL:
-                        downloadURL
-
-                });
-
-            }
-        );
-
-
-        /* =================================================
-           SORT BY ACTUAL FILE NAME
-           ================================================= */
-
-        availableFiles.sort(
-            function(a, b) {
-
-                return a.name.localeCompare(
-                    b.name,
-                    undefined,
-                    {
-                        numeric:
-                            true,
-
-                        sensitivity:
-                            "base"
-                    }
-                );
-
-            }
-        );
-
-
-        /* =================================================
-           CHECK
-           ================================================= */
-
-        if (
-            availableFiles.length === 0
-        ) {
-
-            throw new Error(
-                "No files found in the GitHub repository."
-            );
-
-        }
-
-
-        /* =================================================
-           DISPLAY FILES
-           ================================================= */
-
-        displayFiles();
-
-
-        /* =================================================
-           HIDE LOGIN
-           ================================================= */
-
-        loginCard.style.display =
-            "none";
-
-
-        /* =================================================
-           SHOW FILE CARD
-           ================================================= */
-
-        fileCard.style.display =
-            "block";
-
-
-        /* =================================================
-           FILE COUNT
-           ================================================= */
-
-        document
-            .getElementById(
-                "fileInfo"
-            )
-            .textContent =
-            availableFiles.length +
-            " files available";
-
-
-        /* =================================================
-           SUCCESS
-           ================================================= */
-
-        showStatus(
-            "Files loaded successfully.",
-            "success"
-        );
-
-
-    }
-
-
-    catch(error) {
-
-
-        console.error(
-            "GitHub Error:",
-            error
-        );
-
-
-        showStatus(
-            "❌ " +
-            error.message,
-            "error"
-        );
-
-
-        submitButton.disabled =
-            false;
-
-
-        submitButton.textContent =
-            "🔐 SUBMIT";
-
-    }
-
-}
-
-
-/* =========================================================
-   DISPLAY FILES
-   ========================================================= */
-
-function displayFiles() {
-
-
-    fileList.innerHTML =
-        "";
-
-
-    availableFiles.forEach(
-        function(
-            file,
-            index
-        ) {
-
-
-            /* ---------------------------------------------
-               FILE ROW
-               --------------------------------------------- */
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "file-item";
-
-
-            /*
-            Staggered animation.
-
-            Maximum delay prevents very long
-            waits when there are many files.
-            */
-
-            row.style.animationDelay =
-                Math.min(
-                    index * 0.035,
-                    0.8
-                ) + "s";
-
-
-            /* ---------------------------------------------
-               CHECKBOX
-               --------------------------------------------- */
-
-            const checkbox =
-                document.createElement(
-                    "input"
-                );
-
-
-            checkbox.type =
-                "checkbox";
-
-
-            checkbox.className =
-                "file-checkbox";
-
-
-            checkbox.dataset.index =
-                index;
-
-
-            checkbox.setAttribute(
-                "aria-label",
-                "Select " +
-                file.name
-            );
-
-
-            checkbox.addEventListener(
-                "change",
-                updateSelectedCount
-            );
-
-
-            /* ---------------------------------------------
-               ACTUAL FILE NAME
-               --------------------------------------------- */
-
-            const name =
-                document.createElement(
-                    "span"
-                );
-
-
-            name.className =
-                "file-name";
-
-
-            name.textContent =
-                file.name;
-
-
-            /* ---------------------------------------------
-               FILE TYPE
-               --------------------------------------------- */
-
-            const type =
-                document.createElement(
-                    "span"
-                );
-
-
-            type.className =
-                "file-type";
-
-
-            type.textContent =
-                file.extension ||
-                "FILE";
-
-
-            /* ---------------------------------------------
-               ADD
-               --------------------------------------------- */
-
-            row.appendChild(
-                checkbox
-            );
-
-
-            row.appendChild(
-                name
-            );
-
-
-            row.appendChild(
-                type
-            );
-
-
-            fileList.appendChild(
-                row
-            );
-
-        }
-    );
-
-
-    updateSelectedCount();
-
-}
-
-
-/* =========================================================
-   SELECT ALL
-   ========================================================= */
-
-selectAllButton.addEventListener(
-    "click",
-    selectAllFiles
-);
-
-
-function selectAllFiles() {
-
-
-    document
-        .querySelectorAll(
-            ".file-checkbox"
-        )
-        .forEach(
-            function(checkbox) {
-
-                checkbox.checked =
-                    true;
-
-            }
-        );
-
-
-    updateSelectedCount();
-
-}
-
-
-/* =========================================================
-   CLEAR ALL
-   ========================================================= */
-
-clearAllButton.addEventListener(
-    "click",
-    clearAllFiles
-);
-
-
-function clearAllFiles() {
-
-
-    document
-        .querySelectorAll(
-            ".file-checkbox"
-        )
-        .forEach(
-            function(checkbox) {
-
-                checkbox.checked =
-                    false;
-
-            }
-        );
-
-
-    updateSelectedCount();
-
-}
-
-
-/* =========================================================
-   UPDATE SELECTED COUNT
-   ========================================================= */
-
-function updateSelectedCount() {
-
-
-    const selected =
-        document.querySelectorAll(
-            ".file-checkbox:checked"
-        );
-
-
-    const count =
-        selected.length;
-
-
-    const countElement =
-        document.getElementById(
-            "selectedCount"
-        );
-
-
-    countElement.textContent =
-        "Selected Files: " +
-        count;
-
-
-    countElement.style.transform =
-        "scale(1.04)";
-
-
-    setTimeout(
-        function() {
-
-            countElement.style.transform =
-                "scale(1)";
-
-        },
-        150
-    );
-
-
-    downloadButton.disabled =
-        count === 0;
-
-}
-
-
-/* =========================================================
-   DOWNLOAD SELECTED FILES
-   =========================================================
-
-   Files are downloaded individually.
-
-   NO ZIP FILE.
-
-   ========================================================= */
-
-downloadButton.addEventListener(
-    "click",
-    downloadSelectedFiles
-);
-
-
-async function downloadSelectedFiles() {
-
-
-    const selected =
-        Array.from(
-            document.querySelectorAll(
-                ".file-checkbox:checked"
-            )
-        );
-
-
-    /* -----------------------------------------------------
-       Nothing selected
-       ----------------------------------------------------- */
-
-    if (
-        selected.length === 0
-    ) {
-
-        alert(
-            "Please select at least one file."
-        );
-
-        return;
-
-    }
-
-
-    downloadButton.disabled =
-        true;
-
-
-    /* =====================================================
-       DOWNLOAD ONE BY ONE
-       ===================================================== */
-
-    for (
-        let i = 0;
-        i < selected.length;
-        i++
-    ) {
-
-
-        /* ---------------------------------------------
-           Checkbox
-           --------------------------------------------- */
-
-        const checkbox =
-            selected[i];
-
-
-        /* ---------------------------------------------
-           File index
-           --------------------------------------------- */
-
-        const index =
-            Number(
-                checkbox.dataset.index
-            );
-
-
-        /* ---------------------------------------------
-           File
-           --------------------------------------------- */
-
-        const file =
-            availableFiles[index];
-
-
-        /* ---------------------------------------------
-           Progress
-           --------------------------------------------- */
-
-        downloadButton.textContent =
-            "⬇️ Downloading " +
-            (i + 1) +
-            " / " +
-            selected.length;
-
-
-        /* ---------------------------------------------
-           Create download link
-           --------------------------------------------- */
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-
-        link.href =
-            file.downloadURL;
-
-
-        link.download =
-            file.name;
-
-
-        link.target =
-            "_blank";
-
-
-        link.rel =
-            "noopener";
-
-
-        /* ---------------------------------------------
-           Add link
-           --------------------------------------------- */
-
-        document
-            .body
-            .appendChild(
-                link
-            );
-
-
-        /* ---------------------------------------------
-           Start
-           --------------------------------------------- */
-
-        link.click();
-
-
-        /* ---------------------------------------------
-           Remove
-           --------------------------------------------- */
-
-        document
-            .body
-            .removeChild(
-                link
-            );
-
-
-        /* ---------------------------------------------
-           Delay between downloads
-           --------------------------------------------- */
-
-        await delay(
-            1200
-        );
-
-    }
-
-
-    /* =====================================================
-       RESET
-       ===================================================== */
-
-    downloadButton.textContent =
-        "📥 DOWNLOAD SELECTED FILES";
-
-
-    downloadButton.disabled =
-        false;
-
-
-    showStatus(
-        "Selected files sent for download.",
+    setStatus(
+        "Access verified. Opening resources...",
         "success"
     );
 
+    setTimeout(() => {
+
+        loginState.style.display = "none";
+
+        successState.style.display = "block";
+
+    }, 650);
 }
 
 
-/* =========================================================
-   DELAY
-   ========================================================= */
+/* ==============================
+   EVENTS
+   ============================== */
 
-function delay(
-    milliseconds
-) {
-
-    return new Promise(
-        function(resolve) {
-
-            setTimeout(
-                resolve,
-                milliseconds
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SCROLL TO TOP
-   ========================================================= */
-
-fileList.addEventListener(
-    "scroll",
-    function() {
-
-
-        if (
-            fileList.scrollTop >
-            150
-        ) {
-
-            scrollTopButton.classList.add(
-                "show"
-            );
-
-        }
-
-        else {
-
-            scrollTopButton.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   SCROLL TOP BUTTON
-   ========================================================= */
-
-scrollTopButton.addEventListener(
+submitButton.addEventListener(
     "click",
-    function() {
+    verifyAccess
+);
 
-        fileList.scrollTo({
+passwordInput.addEventListener(
+    "keydown",
+    event => {
 
-            top:
-                0,
-
-            behavior:
-                "smooth"
-
-        });
+        if(event.key === "Enter"){
+            verifyAccess();
+        }
 
     }
 );
 
 
-/* =========================================================
-   STATUS MESSAGE
-   ========================================================= */
+/* ==============================
+   GOOGLE DRIVE
+   ============================== */
 
-function showStatus(
-    message,
-    type
-) {
+driveButton.addEventListener(
+    "click",
+    () => {
 
+        driveButton.disabled = true;
 
-    const status =
-        document.getElementById(
-            "status"
-        );
+        driveButton.textContent =
+            "⏳  OPENING REPOSITORY...";
 
+        setTimeout(() => {
 
-    status.textContent =
-        message;
+            window.open(
+                GOOGLE_DRIVE_FOLDER,
+                "_blank",
+                "noopener,noreferrer"
+            );
 
+            driveButton.disabled = false;
 
-    status.className =
-        "status " +
-        type;
+            driveButton.textContent =
+                "📥  OPEN COURSE FILES";
 
+        }, 500);
 
-    status.style.display =
-        "block";
-
-}
-
+    }
+);
 </script>
 
-
 </body>
-
 </html>
